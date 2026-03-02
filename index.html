@@ -27,10 +27,12 @@
 
         /* Header Section */
         header {
-            background: linear-gradient(135deg, #90F7EC 10%, #32CCBC 100%);
+            background: #00d2ff;  /* fallback for old browsers */
+            background: -webkit-linear-gradient(to right, #3a7bd5, #00d2ff);  /* Chrome 10-25, Safari 5.1-6 */
+            background: linear-gradient(to right, #3a7bd5, #00d2ff); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
             padding: 40px 20px;
             text-align: center;
-            box-shadow: 0 10px 30px rgba(50, 204, 188, 0.3);
+            box-shadow: 0 10px 30px rgba(58, 123, 213, 0.3);
             position: sticky;
             top: 0;
             z-index: 100;
@@ -95,8 +97,8 @@
 
         .nav-btn {
             padding: 10px 20px;
-            background: linear-gradient(135deg, #90F7EC 10%, #32CCBC 100%);
-            color: #2d3436;
+            background: linear-gradient(to right, #3a7bd5, #00d2ff);
+            color: white;
             border: none;
             border-radius: 25px;
             cursor: pointer;
@@ -107,19 +109,19 @@
             display: flex;
             align-items: center;
             gap: 8px;
-            box-shadow: 0 4px 15px rgba(50, 204, 188, 0.2);
+            box-shadow: 0 4px 15px rgba(58, 123, 213, 0.2);
         }
 
         .nav-btn:hover {
             transform: translateY(-3px);
-            box-shadow: 0 8px 25px rgba(50, 204, 188, 0.4);
-            background: linear-gradient(135deg, #70E8DC 10%, #1DAA95 100%);
+            box-shadow: 0 8px 25px rgba(58, 123, 213, 0.4);
+            background: linear-gradient(to right, #2563ac, #0099cc);
         }
 
         .nav-btn.active {
-            background: linear-gradient(135deg, #1DAA95 10%, #0D6E63 100%);
+            background: linear-gradient(to right, #1e4b8b, #0077aa);
             color: white;
-            box-shadow: 0 8px 20px rgba(29, 170, 149, 0.5);
+            box-shadow: 0 8px 20px rgba(30, 75, 139, 0.5);
         }
 
         /* Main Container */
@@ -146,7 +148,7 @@
 
         .section-title i {
             font-size: 32px;
-            background: linear-gradient(135deg, #90F7EC 10%, #32CCBC 100%);
+            background: linear-gradient(to right, #3a7bd5, #00d2ff);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
@@ -207,8 +209,8 @@
         .form-group select:focus,
         .form-group textarea:focus {
             outline: none;
-            border-color: #32CCBC;
-            box-shadow: 0 0 0 3px rgba(50, 204, 188, 0.1);
+            border-color: #3a7bd5;
+            box-shadow: 0 0 0 3px rgba(58, 123, 213, 0.1);
         }
 
         .form-row {
@@ -225,23 +227,23 @@
 
         /* File Upload */
         .file-upload-area {
-            border: 2px dashed #32CCBC;
+            border: 2px dashed #3a7bd5;
             border-radius: 15px;
             padding: 30px;
             text-align: center;
             cursor: pointer;
             transition: all 0.3s ease;
-            background: linear-gradient(135deg, rgba(144, 247, 236, 0.05) 0%, rgba(50, 204, 188, 0.05) 100%);
+            background: linear-gradient(135deg, rgba(58, 123, 213, 0.05) 0%, rgba(0, 210, 255, 0.05) 100%);
         }
 
         .file-upload-area:hover {
-            border-color: #1FA39A;
-            background: linear-gradient(135deg, rgba(144, 247, 236, 0.1) 0%, rgba(50, 204, 188, 0.1) 100%);
+            border-color: #2563ac;
+            background: linear-gradient(135deg, rgba(58, 123, 213, 0.1) 0%, rgba(0, 210, 255, 0.1) 100%);
         }
 
         .file-upload-area i {
             font-size: 40px;
-            color: #32CCBC;
+            color: #3a7bd5;
             margin-bottom: 10px;
         }
 
@@ -253,9 +255,9 @@
         .file-name-display {
             margin-top: 10px;
             padding: 10px;
-            background: #E0F8F7;
+            background: #E3F2FD;
             border-radius: 8px;
-            color: #32CCBC;
+            color: #3a7bd5;
             font-size: 13px;
             font-weight: 500;
             display: none;
@@ -287,28 +289,66 @@
         }
 
         .checkbox-label:hover {
-            border-color: #32CCBC;
-            background: #E0F8F7;
+            border-color: #3a7bd5;
+            background: #E3F2FD;
         }
 
         .checkbox-label input[type="checkbox"] {
             width: 18px;
             height: 18px;
             cursor: pointer;
-            accent-color: #32CCBC;
+            accent-color: #3a7bd5;
         }
 
         .checkbox-label input[type="checkbox"]:checked + span {
-            color: #32CCBC;
+            color: #3a7bd5;
             font-weight: 600;
         }
 
         .form-help-text {
             font-size: 13px;
-            color: #32CCBC;
+            color: #3a7bd5;
             font-style: italic;
             margin-top: 8px;
-            margin-bottom: 0;
+            margin-bottom: 15px;
+        }
+
+        /* File Upload Container */
+        #fileUploadContainer {
+            display: grid;
+            gap: 20px;
+            margin-top: 15px;
+        }
+
+        .file-upload-wrapper {
+            border: 1px dashed #ddd;
+            border-radius: 12px;
+            padding: 15px;
+            background: #f9f9f9;
+        }
+
+        .file-upload-wrapper.active {
+            border-color: #3a7bd5;
+            background: #E3F2FD;
+        }
+
+        .file-upload-label {
+            display: block;
+            font-weight: 600;
+            color: #2d3436;
+            margin-bottom: 10px;
+            font-size: 14px;
+        }
+
+        .file-upload-label .semester-badge {
+            display: inline-block;
+            background: linear-gradient(to right, #3a7bd5, #00d2ff);
+            color: white;
+            padding: 4px 10px;
+            border-radius: 15px;
+            font-size: 12px;
+            margin-left: 8px;
+            font-weight: 600;
         }
 
         /* Buttons */
@@ -327,30 +367,30 @@
         }
 
         .btn-primary {
-            background: linear-gradient(135deg, #1DAA95 10%, #0D6E63 100%);
+            background: linear-gradient(to right, #1e4b8b, #0077aa);
             color: white;
             width: 100%;
             font-weight: 600;
-            box-shadow: 0 4px 15px rgba(29, 170, 149, 0.3);
+            box-shadow: 0 4px 15px rgba(30, 75, 139, 0.3);
         }
 
         .btn-primary:hover {
             transform: translateY(-2px);
-            box-shadow: 0 10px 25px rgba(29, 170, 149, 0.5);
-            background: linear-gradient(135deg, #16968A 10%, #0A4D45 100%);
+            box-shadow: 0 10px 25px rgba(30, 75, 139, 0.5);
+            background: linear-gradient(to right, #163d6f, #005588);
         }
 
         .btn-secondary {
-            background: linear-gradient(135deg, #1DAA95 10%, #0D6E63 100%);
+            background: linear-gradient(to right, #1e4b8b, #0077aa);
             color: white;
             font-weight: 600;
-            box-shadow: 0 4px 15px rgba(29, 170, 149, 0.3);
+            box-shadow: 0 4px 15px rgba(30, 75, 139, 0.3);
         }
 
         .btn-secondary:hover {
             transform: translateY(-2px);
-            box-shadow: 0 10px 25px rgba(29, 170, 149, 0.5);
-            background: linear-gradient(135deg, #16968A 10%, #0A4D45 100%);
+            box-shadow: 0 10px 25px rgba(30, 75, 139, 0.5);
+            background: linear-gradient(to right, #163d6f, #005588);
         }
 
         /* Dashboard Grid */
@@ -407,8 +447,8 @@
         }
 
         thead {
-            background: linear-gradient(135deg, #90F7EC 10%, #32CCBC 100%);
-            color: #2d3436;
+            background: linear-gradient(to right, #3a7bd5, #00d2ff);
+            color: white;
         }
 
         th {
@@ -485,8 +525,8 @@
 
         /* Admin Panel */
         .admin-panel {
-            background: linear-gradient(135deg, rgba(144, 247, 236, 0.1) 0%, rgba(50, 204, 188, 0.1) 100%);
-            border: 2px solid #32CCBC;
+            background: linear-gradient(135deg, rgba(58, 123, 213, 0.1) 0%, rgba(0, 210, 255, 0.1) 100%);
+            border: 2px solid #3a7bd5;
             border-radius: 15px;
             padding: 20px;
             margin-bottom: 25px;
@@ -495,7 +535,7 @@
         .admin-input {
             max-width: 300px;
             padding: 10px 15px;
-            border: 2px solid #32CCBC;
+            border: 2px solid #3a7bd5;
             border-radius: 10px;
             font-family: 'Kanit', sans-serif;
         }
@@ -652,12 +692,11 @@
 
                     <div class="form-group">
                         <label><i class="fas fa-file-pdf"></i> อัพโหลดไฟล์สรุป (PDF เท่านั้น)</label>
-                        <div class="file-upload-area" id="fileUploadArea">
-                            <i class="fas fa-cloud-upload-alt"></i>
-                            <p class="file-upload-text">คลิกหรือลากไฟล์มาที่นี่<br><small>ไฟล์ .pdf เท่านั้น (ไม่เกิน 10MB)</small></p>
+                        <p class="form-help-text" id="fileUploadHint">💡 เลือกภาคเรียนอย่างน้อย 1 ภาคเรียนแล้วจึงสามารถอัพโหลดไฟล์ได้</p>
+                        
+                        <div id="fileUploadContainer">
+                            <!-- File upload areas will be added here dynamically -->
                         </div>
-                        <input type="file" id="fileInput" accept=".pdf" style="display: none;">
-                        <div class="file-name-display" id="fileNameDisplay"></div>
                     </div>
 
                     <button type="submit" class="btn btn-primary">
@@ -781,41 +820,81 @@
         // Configuration
         const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbza1kD_Chkzv4NTtmnkYh_DVuoZu1vq57HcKM_xxEk8yyRUkmiIDEuNu6LAJU3SDDpHZQ/exec';
         const ADMIN_PASSWORD = 'admin999';
-        let selectedFile = null;
+        let selectedFiles = {}; // Object to store files: { semester: file }
 
-        // File Upload Handler
-        const fileUploadArea = document.getElementById('fileUploadArea');
-        const fileInput = document.getElementById('fileInput');
-        const fileNameDisplay = document.getElementById('fileNameDisplay');
-
-        fileUploadArea.addEventListener('click', () => fileInput.click());
-
-        fileUploadArea.addEventListener('dragover', (e) => {
-            e.preventDefault();
-            fileUploadArea.style.background = 'linear-gradient(135deg, rgba(102, 126, 234, 0.2) 0%, rgba(118, 75, 162, 0.2) 100%)';
-        });
-
-        fileUploadArea.addEventListener('dragleave', () => {
-            fileUploadArea.style.background = 'linear-gradient(135deg, rgba(102, 126, 234, 0.05) 0%, rgba(118, 75, 162, 0.05) 100%)';
-        });
-
-        fileUploadArea.addEventListener('drop', (e) => {
-            e.preventDefault();
-            fileUploadArea.style.background = 'linear-gradient(135deg, rgba(102, 126, 234, 0.05) 0%, rgba(118, 75, 162, 0.05) 100%)';
+        // Update file upload areas when semester checkboxes change
+        function updateFileUploadAreas() {
+            const semesterChecks = document.querySelectorAll('input[name="semester"]:checked');
+            const container = document.getElementById('fileUploadContainer');
             
-            const files = e.dataTransfer.files;
-            if (files.length > 0) {
-                handleFileSelect(files[0]);
-            }
-        });
+            // Clear previous upload areas
+            container.innerHTML = '';
 
-        fileInput.addEventListener('change', (e) => {
-            if (e.target.files.length > 0) {
-                handleFileSelect(e.target.files[0]);
+            if (semesterChecks.length === 0) {
+                container.innerHTML = '<p class="form-help-text">💡 เลือกภาคเรียนอย่างน้อย 1 ภาคเรียนแล้วจึงสามารถอัพโหลดไฟล์ได้</p>';
+                return;
             }
-        });
 
-        function handleFileSelect(file) {
+            // Create upload area for each selected semester
+            semesterChecks.forEach((checkbox) => {
+                const semester = checkbox.value;
+                const wrapper = document.createElement('div');
+                wrapper.className = 'file-upload-wrapper';
+                wrapper.id = `file-wrapper-${semester}`;
+                wrapper.innerHTML = `
+                    <label class="file-upload-label">
+                        📄 ไฟล์สำหรับ <span class="semester-badge">${semester}</span>
+                    </label>
+                    <div class="file-upload-area" id="fileUploadArea-${semester}">
+                        <i class="fas fa-cloud-upload-alt"></i>
+                        <p class="file-upload-text">คลิกหรือลากไฟล์มาที่นี่<br><small>ไฟล์ .pdf เท่านั้น (ไม่เกิน 10MB)</small></p>
+                    </div>
+                    <input type="file" id="fileInput-${semester}" accept=".pdf" style="display: none;">
+                    <div class="file-name-display" id="fileNameDisplay-${semester}"></div>
+                `;
+                container.appendChild(wrapper);
+
+                // Setup file upload for this semester
+                setupFileUpload(semester);
+            });
+        }
+
+        // Setup file upload handlers for a specific semester
+        function setupFileUpload(semester) {
+            const fileUploadArea = document.getElementById(`fileUploadArea-${semester}`);
+            const fileInput = document.getElementById(`fileInput-${semester}`);
+            const fileNameDisplay = document.getElementById(`fileNameDisplay-${semester}`);
+
+            fileUploadArea.addEventListener('click', () => fileInput.click());
+
+            fileUploadArea.addEventListener('dragover', (e) => {
+                e.preventDefault();
+                fileUploadArea.style.background = 'linear-gradient(135deg, rgba(58, 123, 213, 0.2) 0%, rgba(0, 210, 255, 0.2) 100%)';
+            });
+
+            fileUploadArea.addEventListener('dragleave', () => {
+                fileUploadArea.style.background = 'linear-gradient(135deg, rgba(58, 123, 213, 0.05) 0%, rgba(0, 210, 255, 0.05) 100%)';
+            });
+
+            fileUploadArea.addEventListener('drop', (e) => {
+                e.preventDefault();
+                fileUploadArea.style.background = 'linear-gradient(135deg, rgba(58, 123, 213, 0.05) 0%, rgba(0, 210, 255, 0.05) 100%)';
+                
+                const files = e.dataTransfer.files;
+                if (files.length > 0) {
+                    handleFileSelectForSemester(semester, files[0], fileNameDisplay);
+                }
+            });
+
+            fileInput.addEventListener('change', (e) => {
+                if (e.target.files.length > 0) {
+                    handleFileSelectForSemester(semester, e.target.files[0], fileNameDisplay);
+                }
+            });
+        }
+
+        // Handle file selection for specific semester
+        function handleFileSelectForSemester(semester, file, fileNameDisplay) {
             if (!file.name.endsWith('.pdf')) {
                 Swal.fire({
                     icon: 'error',
@@ -834,10 +913,20 @@
                 return;
             }
 
-            selectedFile = file;
+            selectedFiles[semester] = file;
             fileNameDisplay.textContent = `✓ ${file.name} (${(file.size / 1024 / 1024).toFixed(2)} MB)`;
             fileNameDisplay.classList.add('show');
         }
+
+        // Add event listeners to semester checkboxes
+        document.addEventListener('DOMContentLoaded', () => {
+            const semesterChecks = document.querySelectorAll('input[name="semester"]');
+            semesterChecks.forEach(checkbox => {
+                checkbox.addEventListener('change', updateFileUploadAreas);
+            });
+            // Initial call to update upload areas
+            updateFileUploadAreas();
+        });
 
         // Convert file to Base64
         function fileToBase64(file) {
@@ -919,11 +1008,11 @@
                     icon: 'success',
                     title: 'ส่งรายงานเสร็จสิ้น!',
                     text: `ระบบได้บันทึกข้อมูลของคุณแล้ว (${selectedSemesters})`,
-                    confirmButtonColor: '#32CCBC'
+                    confirmButtonColor: '#3a7bd5'
                 });
                 document.getElementById('submitForm').reset();
-                selectedFile = null;
-                fileNameDisplay.classList.remove('show');
+                selectedFiles = {};
+                updateFileUploadAreas();
             } catch (error) {
                 console.error('Error:', error);
                 Swal.fire({
