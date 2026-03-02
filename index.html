@@ -566,26 +566,37 @@
         function renderChart(data) {
             const ctx = document.getElementById('gradeChart').getContext('2d');
             
-            // นับจำนวนตามระดับชั้น
+            // นับจำนวนตามระดับชั้นและภาคเรียน
             const gradeCounts = {
-                'มัธยมศึกษาปีที่ 1': 0,
-                'มัธยมศึกษาปีที่ 2': 0,
-                'มัธยมศึกษาปีที่ 3': 0,
-                'มัธยมศึกษาปีที่ 4': 0,
-                'มัธยมศึกษาปีที่ 5': 0,
-                'มัธยมศึกษาปีที่ 6': 0
+                'มัธยมศึกษาปีที่ 1': { sem1: 0, sem2: 0 },
+                'มัธยมศึกษาปีที่ 2': { sem1: 0, sem2: 0 },
+                'มัธยมศึกษาปีที่ 3': { sem1: 0, sem2: 0 },
+                'มัธยมศึกษาปีที่ 4': { sem1: 0, sem2: 0 },
+                'มัธยมศึกษาปีที่ 5': { sem1: 0, sem2: 0 },
+                'มัธยมศึกษาปีที่ 6': { sem1: 0, sem2: 0 }
             };
 
             data.forEach(row => {
-                if (row.grade && gradeCounts[row.grade] !== undefined) {
-                    gradeCounts[row.grade]++;
+                if (row.grade && gradeCounts[row.grade]) {
+                    // ตรวจสอบว่ามีข้อมูลของเทอม 1 หรือไม่
+                    if (row.semesters && row.semesters.includes('ภาคเรียนที่ 1')) {
+                        gradeCounts[row.grade].sem1++;
+                    }
+                    // ตรวจสอบว่ามีข้อมูลของเทอม 2 หรือไม่
+                    if (row.semesters && row.semesters.includes('ภาคเรียนที่ 2')) {
+                        gradeCounts[row.grade].sem2++;
+                    }
                 }
             });
 
-            // สร้าง Gradient สวยๆ สำหรับแท่งกราฟ
-            const gradient = ctx.createLinearGradient(0, 0, 0, 400);
-            gradient.addColorStop(0, '#FC466B');
-            gradient.addColorStop(1, '#3F5EFB');
+            // สร้าง Gradient สวยๆ สำหรับแท่งกราฟแยก 2 สี
+            const gradientSem1 = ctx.createLinearGradient(0, 0, 0, 400);
+            gradientSem1.addColorStop(0, '#FC466B');
+            gradientSem1.addColorStop(1, '#FF8A9B');
+
+            const gradientSem2 = ctx.createLinearGradient(0, 0, 0, 400);
+            gradientSem2.addColorStop(0, '#3F5EFB');
+            gradientSem2.addColorStop(1, '#8A9EFB');
 
             if (gradeChartInstance) {
                 gradeChartInstance.destroy(); // ลบกราฟเก่าออกก่อนวาดใหม่
@@ -599,14 +610,26 @@
                 data: {
                     // ย่อชื่อระดับชั้นให้สั้นลงเพื่อให้แสดงในแกน X ได้สวยงามขึ้น
                     labels: Object.keys(gradeCounts).map(g => g.replace('มัธยมศึกษาปีที่ ', 'ม.')), 
-                    datasets: [{
-                        label: 'จำนวนการส่งงาน (รายการ)',
-                        data: Object.values(gradeCounts),
-                        backgroundColor: gradient,
-                        borderRadius: 8, // มุมโค้งของแท่งกราฟ
-                        borderSkipped: false,
-                        barPercentage: 0.6
-                    }]
+                    datasets: [
+                        {
+                            label: 'ภาคเรียนที่ 1',
+                            data: Object.values(gradeCounts).map(g => g.sem1),
+                            backgroundColor: gradientSem1,
+                            borderRadius: 6, // มุมโค้งของแท่งกราฟ
+                            borderSkipped: false,
+                            barPercentage: 0.7,
+                            categoryPercentage: 0.8
+                        },
+                        {
+                            label: 'ภาคเรียนที่ 2',
+                            data: Object.values(gradeCounts).map(g => g.sem2),
+                            backgroundColor: gradientSem2,
+                            borderRadius: 6, // มุมโค้งของแท่งกราฟ
+                            borderSkipped: false,
+                            barPercentage: 0.7,
+                            categoryPercentage: 0.8
+                        }
+                    ]
                 },
                 options: {
                     responsive: true,
@@ -630,7 +653,12 @@
                     },
                     plugins: {
                         legend: {
-                            display: false // ซ่อน label ชุดข้อมูล (เพราะมีชุดเดียว)
+                            display: true, // แสดง label ว่าสีไหนคือเทอมไหน
+                            position: 'top',
+                            labels: {
+                                usePointStyle: true,
+                                boxWidth: 8
+                            }
                         },
                         tooltip: {
                             backgroundColor: 'rgba(255, 255, 255, 0.95)',
@@ -639,7 +667,8 @@
                             borderColor: '#E2E8F0',
                             borderWidth: 1,
                             padding: 12,
-                            displayColors: false,
+                            displayColors: true,
+                            usePointStyle: true,
                             titleFont: { size: 14, family: "'Kanit', sans-serif", weight: 'bold' },
                             bodyFont: { size: 13, family: "'Kanit', sans-serif" }
                         }
