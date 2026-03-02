@@ -248,11 +248,26 @@
 
             <!-- Data Table -->
             <div class="card-minimal overflow-hidden">
-                <div class="p-5 border-b border-slate-100 bg-slate-50 flex justify-between items-center">
-                    <h3 class="font-bold flex items-center gap-2"><i class="ph-fill ph-list-dashes text-[#FC466B]"></i> รายการส่งงานล่าสุด</h3>
-                    <button onclick="loadDashboardData()" class="text-sm text-blue-600 hover:text-blue-800 flex items-center gap-1">
-                        <i class="ph-bold ph-arrows-clockwise"></i> รีเฟรช
-                    </button>
+                <div class="p-5 border-b border-slate-100 bg-slate-50 flex flex-col sm:flex-row justify-between items-center gap-4">
+                    <h3 class="font-bold flex items-center gap-2 whitespace-nowrap"><i class="ph-fill ph-list-dashes text-[#FC466B]"></i> รายการส่งงานล่าสุด</h3>
+                    
+                    <div class="flex items-center gap-3 w-full sm:w-auto">
+                        <div class="relative w-full sm:w-64">
+                            <select id="filterGrade" onchange="filterDashboard()" class="input-minimal py-2 pl-10 pr-8 text-sm w-full appearance-none cursor-pointer">
+                                <option value="all">-- แสดงทุกระดับชั้น --</option>
+                                <option value="มัธยมศึกษาปีที่ 1">มัธยมศึกษาปีที่ 1</option>
+                                <option value="มัธยมศึกษาปีที่ 2">มัธยมศึกษาปีที่ 2</option>
+                                <option value="มัธยมศึกษาปีที่ 3">มัธยมศึกษาปีที่ 3</option>
+                                <option value="มัธยมศึกษาปีที่ 4">มัธยมศึกษาปีที่ 4</option>
+                                <option value="มัธยมศึกษาปีที่ 5">มัธยมศึกษาปีที่ 5</option>
+                                <option value="มัธยมศึกษาปีที่ 6">มัธยมศึกษาปีที่ 6</option>
+                            </select>
+                            <i class="ph-bold ph-funnel absolute left-3 top-1/2 -translate-y-1/2 text-slate-400"></i>
+                        </div>
+                        <button onclick="loadDashboardData()" class="text-sm text-blue-600 hover:text-blue-800 flex items-center gap-1 whitespace-nowrap bg-blue-50 px-3 py-2 rounded-xl hover:bg-blue-100 transition">
+                            <i class="ph-bold ph-arrows-clockwise"></i> รีเฟรช
+                        </button>
+                    </div>
                 </div>
                 <div class="overflow-x-auto">
                     <table class="w-full text-left border-collapse">
@@ -462,7 +477,7 @@
                 
                 if(result.status === 'success') {
                     currentData = result.data;
-                    renderDashboard(currentData);
+                    filterDashboard(); // ใช้ฟังก์ชันกรองข้อมูลแทนการแสดงผลโดยตรง
                     if(document.getElementById('section-admin').style.display === 'block') {
                         renderAdmin(currentData);
                     }
@@ -472,6 +487,19 @@
             } catch (error) {
                 tbody.innerHTML = '<tr><td colspan="6" class="p-8 text-center text-red-500">เกิดข้อผิดพลาดในการเชื่อมต่อ</td></tr>';
             }
+        }
+
+        // ฟังก์ชันสำหรับกรองข้อมูลระดับชั้นในแดชบอร์ด
+        function filterDashboard() {
+            const selectedGrade = document.getElementById('filterGrade').value;
+            let filteredData = currentData;
+            
+            if (selectedGrade !== 'all') {
+                filteredData = currentData.filter(row => row.grade === selectedGrade);
+            }
+            
+            // ส่งข้อมูลที่ถูกกรองไปแสดงผล (สถิติด้านบนจะอัปเดตตามด้วย)
+            renderDashboard(filteredData);
         }
 
         function getStatusBadge(status) {
