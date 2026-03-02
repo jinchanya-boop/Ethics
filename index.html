@@ -1,0 +1,1015 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ระบบรายงานการส่งเสริมคุณธรรมจริยธรรม - โรงเรียนสา</title>
+    <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Kanit', sans-serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            min-height: 100vh;
+            color: #2d3436;
+        }
+
+        /* Header Section */
+        header {
+            background: linear-gradient(90deg, #FC466B 0%, #3F5EFB 100%);
+            padding: 40px 20px;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(252, 70, 107, 0.3);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .logo {
+            width: 150px;
+            height: auto;
+            margin-bottom: 15px;
+            animation: slideDown 0.6s ease-out;
+        }
+
+        .system-title {
+            font-size: 28px;
+            font-weight: 600;
+            color: white;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+            margin-bottom: 10px;
+            animation: slideDown 0.7s ease-out 0.1s both;
+        }
+
+        .system-subtitle {
+            font-size: 14px;
+            color: rgba(255, 255, 255, 0.95);
+            animation: slideDown 0.8s ease-out 0.2s both;
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Navigation */
+        nav {
+            background: white;
+            padding: 15px 20px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+            position: sticky;
+            top: 160px;
+            z-index: 99;
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .nav-btn {
+            padding: 10px 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            font-family: 'Kanit', sans-serif;
+            font-size: 14px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .nav-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(102, 126, 234, 0.4);
+        }
+
+        .nav-btn.active {
+            background: linear-gradient(90deg, #FC466B 0%, #3F5EFB 100%);
+            box-shadow: 0 8px 20px rgba(252, 70, 107, 0.4);
+        }
+
+        /* Main Container */
+        .container {
+            max-width: 1200px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+
+        /* Section Styles */
+        section {
+            margin-bottom: 40px;
+        }
+
+        .section-title {
+            font-size: 26px;
+            font-weight: 600;
+            color: #2d3436;
+            margin-bottom: 25px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .section-title i {
+            font-size: 32px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* Form Section */
+        .form-card {
+            background: white;
+            border-radius: 20px;
+            padding: 35px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+            animation: fadeIn 0.6s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 15px;
+            font-weight: 500;
+            color: #2d3436;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .form-group label i {
+            color: #667eea;
+            font-size: 16px;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #e9ecef;
+            border-radius: 12px;
+            font-family: 'Kanit', sans-serif;
+            font-size: 14px;
+            transition: all 0.3s ease;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        @media (max-width: 768px) {
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* File Upload */
+        .file-upload-area {
+            border: 2px dashed #667eea;
+            border-radius: 15px;
+            padding: 30px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background: linear-gradient(135deg, rgba(102, 126, 234, 0.05) 0%, rgba(118, 75, 162, 0.05) 100%);
+        }
+
+        .file-upload-area:hover {
+            border-color: #764ba2;
+            background: linear-gradient(135deg, rgba(102, 126, 234, 0.1) 0%, rgba(118, 75, 162, 0.1) 100%);
+        }
+
+        .file-upload-area i {
+            font-size: 40px;
+            color: #667eea;
+            margin-bottom: 10px;
+        }
+
+        .file-upload-text {
+            font-size: 14px;
+            color: #666;
+        }
+
+        .file-name-display {
+            margin-top: 10px;
+            padding: 10px;
+            background: #f0f3ff;
+            border-radius: 8px;
+            color: #667eea;
+            font-size: 13px;
+            font-weight: 500;
+            display: none;
+        }
+
+        .file-name-display.show {
+            display: block;
+        }
+
+        /* Buttons */
+        .btn {
+            padding: 12px 30px;
+            border: none;
+            border-radius: 12px;
+            font-family: 'Kanit', sans-serif;
+            font-size: 15px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            width: 100%;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn-secondary {
+            background: linear-gradient(90deg, #FC466B 0%, #3F5EFB 100%);
+            color: white;
+        }
+
+        .btn-secondary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(252, 70, 107, 0.4);
+        }
+
+        /* Dashboard Grid */
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+            margin-bottom: 40px;
+        }
+
+        .stat-card {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 35px rgba(0, 0, 0, 0.15);
+        }
+
+        .stat-icon {
+            font-size: 40px;
+            margin-bottom: 15px;
+        }
+
+        .stat-number {
+            font-size: 32px;
+            font-weight: 700;
+            color: #2d3436;
+            margin-bottom: 8px;
+        }
+
+        .stat-label {
+            font-size: 14px;
+            color: #666;
+            font-weight: 500;
+        }
+
+        /* Table Styles */
+        .table-responsive {
+            overflow-x: auto;
+            border-radius: 15px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+        }
+
+        thead {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        th {
+            padding: 16px;
+            text-align: left;
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        td {
+            padding: 14px 16px;
+            border-bottom: 1px solid #e9ecef;
+        }
+
+        tbody tr:hover {
+            background: #f9f9f9;
+        }
+
+        /* Status Badge */
+        .badge {
+            display: inline-block;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .badge-pending {
+            background: #fff3cd;
+            color: #856404;
+        }
+
+        .badge-approved {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .badge-rejected {
+            background: #f8d7da;
+            color: #721c24;
+        }
+
+        /* Footer */
+        footer {
+            background: linear-gradient(135deg, #2d3436 0%, #1a1a1a 100%);
+            color: white;
+            padding: 30px 20px;
+            text-align: center;
+            margin-top: 60px;
+            font-size: 13px;
+            line-height: 1.8;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* Loading Spinner */
+        .spinner {
+            border: 4px solid #e9ecef;
+            border-top: 4px solid #667eea;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 20px auto;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Admin Panel */
+        .admin-panel {
+            background: linear-gradient(135deg, rgba(102, 126, 234, 0.1) 0%, rgba(118, 75, 162, 0.1) 100%);
+            border: 2px solid #667eea;
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 25px;
+        }
+
+        .admin-input {
+            max-width: 300px;
+            padding: 10px 15px;
+            border: 2px solid #667eea;
+            border-radius: 10px;
+            font-family: 'Kanit', sans-serif;
+        }
+
+        /* Hidden Sections */
+        section.hidden {
+            display: none;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .system-title {
+                font-size: 20px;
+            }
+
+            .system-subtitle {
+                font-size: 12px;
+            }
+
+            .form-card {
+                padding: 20px;
+            }
+
+            .section-title {
+                font-size: 22px;
+            }
+
+            .nav-container {
+                gap: 10px;
+            }
+
+            .nav-btn {
+                padding: 8px 15px;
+                font-size: 13px;
+            }
+
+            .dashboard-grid {
+                grid-template-columns: 1fr;
+            }
+
+            table {
+                font-size: 12px;
+            }
+
+            th, td {
+                padding: 10px;
+            }
+        }
+
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            animation: fadeIn 0.3s ease-out;
+        }
+
+        .modal-content {
+            background-color: white;
+            margin: 50px auto;
+            padding: 30px;
+            border-radius: 15px;
+            width: 90%;
+            max-width: 500px;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
+        }
+
+        .close-modal {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: color 0.3s ease;
+        }
+
+        .close-modal:hover {
+            color: #000;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header -->
+    <header>
+        <div class="header-container">
+            <img src="https://img2.pic.in.th/pic/sa1.png" alt="Logo โรงเรียนสา" class="logo">
+            <h1 class="system-title">🎓 ระบบส่งเสริมคุณธรรมจริยธรรมในสถานศึกษา</h1>
+            <p class="system-subtitle">กิจกรรมอบรมจริยธรรม ประจำสัปดาห์ – โรงเรียนสา</p>
+        </div>
+    </header>
+
+    <!-- Navigation -->
+    <nav>
+        <div class="nav-container">
+            <button class="nav-btn active" onclick="scrollToSection('submit-section')">
+                <i class="fas fa-paper-plane"></i> ส่งงาน
+            </button>
+            <button class="nav-btn" onclick="scrollToSection('admin-section')">
+                <i class="fas fa-check-circle"></i> อนุมัติ
+            </button>
+            <button class="nav-btn" onclick="scrollToSection('dashboard-section')">
+                <i class="fas fa-chart-bar"></i> แดชบอร์ด
+            </button>
+        </div>
+    </nav>
+
+    <!-- Main Container -->
+    <div class="container">
+
+        <!-- 1. Submit Section -->
+        <section id="submit-section">
+            <h2 class="section-title">
+                <i class="fas fa-upload"></i> ส่งรายงานกิจกรรมอบรมจริยธรรม
+            </h2>
+            
+            <div class="form-card">
+                <form id="submitForm" onsubmit="handleSubmit(event)">
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label><i class="fas fa-user"></i> ชื่อครู/อาจารย์</label>
+                            <input type="text" id="teacherName" required placeholder="กรุณากรอกชื่อ">
+                        </div>
+                        <div class="form-group">
+                            <label><i class="fas fa-envelope"></i> อีเมล</label>
+                            <input type="email" id="teacherEmail" required placeholder="example@school.com">
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label><i class="fas fa-graduation-cap"></i> ระดับชั้น</label>
+                            <select id="grade" required>
+                                <option value="">-- เลือกระดับชั้น --</option>
+                                <option value="ม.1">มัธยมศึกษาปีที่ 1</option>
+                                <option value="ม.2">มัธยมศึกษาปีที่ 2</option>
+                                <option value="ม.3">มัธยมศึกษาปีที่ 3</option>
+                                <option value="ม.4">มัธยมศึกษาปีที่ 4</option>
+                                <option value="ม.5">มัธยมศึกษาปีที่ 5</option>
+                                <option value="ม.6">มัธยมศึกษาปีที่ 6</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label><i class="fas fa-calendar-alt"></i> ภาคเรียน</label>
+                            <select id="semester" required>
+                                <option value="">-- เลือกภาคเรียน --</option>
+                                <option value="ภาคเรียนที่ 1">ภาคเรียนที่ 1</option>
+                                <option value="ภาคเรียนที่ 2">ภาคเรียนที่ 2</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label><i class="fas fa-book"></i> หัวข้อกิจกรรม</label>
+                        <input type="text" id="activityTitle" required placeholder="กรุณากรอกหัวข้อกิจกรรม">
+                    </div>
+
+                    <div class="form-group">
+                        <label><i class="fas fa-pen-fancy"></i> รายละเอียดกิจกรรม</label>
+                        <textarea id="activityDetail" rows="5" required placeholder="กรุณากรอกรายละเอียดกิจกรรม..."></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label><i class="fas fa-file-pdf"></i> อัพโหลดไฟล์สรุป (PDF เท่านั้น)</label>
+                        <div class="file-upload-area" id="fileUploadArea">
+                            <i class="fas fa-cloud-upload-alt"></i>
+                            <p class="file-upload-text">คลิกหรือลากไฟล์มาที่นี่<br><small>ไฟล์ .pdf เท่านั้น (ไม่เกิน 10MB)</small></p>
+                        </div>
+                        <input type="file" id="fileInput" accept=".pdf" style="display: none;">
+                        <div class="file-name-display" id="fileNameDisplay"></div>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fas fa-check"></i> ส่งรายงาน
+                    </button>
+                </form>
+            </div>
+        </section>
+
+        <!-- 2. Admin Section -->
+        <section id="admin-section" class="hidden">
+            <h2 class="section-title">
+                <i class="fas fa-lock"></i> ระบบจัดการและอนุมัติ
+            </h2>
+
+            <div class="form-card">
+                <div class="admin-panel">
+                    <label><i class="fas fa-key"></i> รหัสผ่านผู้บริหาร:</label>
+                    <input type="password" id="adminPassword" class="admin-input" placeholder="กรุณากรอกรหัสผ่าน">
+                    <button class="btn btn-secondary" style="margin-left: 10px;" onclick="checkAdminPassword()">
+                        <i class="fas fa-sign-in-alt"></i> เข้าสู่ระบบ
+                    </button>
+                </div>
+
+                <div id="adminContent" style="display: none;">
+                    <h3 style="margin-bottom: 20px; font-size: 18px; color: #2d3436;">
+                        <i class="fas fa-list"></i> รายงานรอการตรวจสอบ
+                    </h3>
+                    <div class="table-responsive">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>ลำดับ</th>
+                                    <th>ชื่อครู</th>
+                                    <th>ระดับชั้น</th>
+                                    <th>หัวข้อกิจกรรม</th>
+                                    <th>วันที่ส่ง</th>
+                                    <th>สถานะ</th>
+                                    <th>จัดการ</th>
+                                </tr>
+                            </thead>
+                            <tbody id="adminTableBody">
+                                <tr>
+                                    <td colspan="7" style="text-align: center; color: #999;">ไม่มีข้อมูล</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 3. Dashboard Section -->
+        <section id="dashboard-section" class="hidden">
+            <h2 class="section-title">
+                <i class="fas fa-chart-pie"></i> แดชบอร์ด สถิติการส่งรายงาน
+            </h2>
+
+            <div class="dashboard-grid">
+                <div class="stat-card">
+                    <div class="stat-icon">📋</div>
+                    <div class="stat-number" id="totalCount">0</div>
+                    <div class="stat-label">จำนวนรายงานทั้งหมด</div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-icon">✅</div>
+                    <div class="stat-number" id="approvedCount">0</div>
+                    <div class="stat-label">ตรวจแล้ว</div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-icon">⏳</div>
+                    <div class="stat-number" id="pendingCount">0</div>
+                    <div class="stat-label">รอการตรวจสอบ</div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-icon">❌</div>
+                    <div class="stat-number" id="rejectedCount">0</div>
+                    <div class="stat-label">ส่งกลับแก้ไข</div>
+                </div>
+            </div>
+
+            <h3 style="margin: 40px 0 20px; font-size: 18px; color: #2d3436;">
+                <i class="fas fa-table"></i> รายละเอียดรายงานทั้งหมด
+            </h3>
+
+            <div class="table-responsive">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>ลำดับ</th>
+                            <th>ชื่อครู</th>
+                            <th>ระดับชั้น</th>
+                            <th>ภาคเรียน</th>
+                            <th>หัวข้อกิจกรรม</th>
+                            <th>วันที่ส่ง</th>
+                            <th>สถานะ</th>
+                        </tr>
+                    </thead>
+                    <tbody id="dashboardTableBody">
+                        <tr>
+                            <td colspan="7" style="text-align: center; color: #999;">กำลังโหลดข้อมูล...</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <p>📱 พัฒนาโดย งานเทคโนโลยี :: โรงเรียนสา | Saschool</p>
+            <p>© 2025 ระบบส่งเสริมคุณธรรมจริยธรรมในสถานศึกษา (กิจกรรมอบรมจริยธรรม ประจำสัปดาห์)</p>
+        </div>
+    </footer>
+
+    <script>
+        // Configuration
+        const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbza1kD_Chkzv4NTtmnkYh_DVuoZu1vq57HcKM_xxEk8yyRUkmiIDEuNu6LAJU3SDDpHZQ/exec';
+        const ADMIN_PASSWORD = 'admin999';
+        let selectedFile = null;
+
+        // File Upload Handler
+        const fileUploadArea = document.getElementById('fileUploadArea');
+        const fileInput = document.getElementById('fileInput');
+        const fileNameDisplay = document.getElementById('fileNameDisplay');
+
+        fileUploadArea.addEventListener('click', () => fileInput.click());
+
+        fileUploadArea.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            fileUploadArea.style.background = 'linear-gradient(135deg, rgba(102, 126, 234, 0.2) 0%, rgba(118, 75, 162, 0.2) 100%)';
+        });
+
+        fileUploadArea.addEventListener('dragleave', () => {
+            fileUploadArea.style.background = 'linear-gradient(135deg, rgba(102, 126, 234, 0.05) 0%, rgba(118, 75, 162, 0.05) 100%)';
+        });
+
+        fileUploadArea.addEventListener('drop', (e) => {
+            e.preventDefault();
+            fileUploadArea.style.background = 'linear-gradient(135deg, rgba(102, 126, 234, 0.05) 0%, rgba(118, 75, 162, 0.05) 100%)';
+            
+            const files = e.dataTransfer.files;
+            if (files.length > 0) {
+                handleFileSelect(files[0]);
+            }
+        });
+
+        fileInput.addEventListener('change', (e) => {
+            if (e.target.files.length > 0) {
+                handleFileSelect(e.target.files[0]);
+            }
+        });
+
+        function handleFileSelect(file) {
+            if (!file.name.endsWith('.pdf')) {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'ข้อผิดพลาด',
+                    text: 'กรุณาอัพโหลดไฟล์ .pdf เท่านั้น'
+                });
+                return;
+            }
+
+            if (file.size > 10 * 1024 * 1024) {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'ไฟล์ใหญ่เกินไป',
+                    text: 'ไฟล์ต้องไม่เกิน 10MB'
+                });
+                return;
+            }
+
+            selectedFile = file;
+            fileNameDisplay.textContent = `✓ ${file.name} (${(file.size / 1024 / 1024).toFixed(2)} MB)`;
+            fileNameDisplay.classList.add('show');
+        }
+
+        // Convert file to Base64
+        function fileToBase64(file) {
+            return new Promise((resolve, reject) => {
+                const reader = new FileReader();
+                reader.onload = () => resolve(reader.result.split(',')[1]);
+                reader.onerror = reject;
+                reader.readAsDataURL(file);
+            });
+        }
+
+        // Form Submit Handler
+        async function handleSubmit(e) {
+            e.preventDefault();
+
+            if (!selectedFile) {
+                Swal.fire({
+                    icon: 'warning',
+                    title: 'ยังไม่ได้อัพโหลดไฟล์',
+                    text: 'กรุณาอัพโหลดไฟล์ PDF ให้เรียบร้อย'
+                });
+                return;
+            }
+
+            // Show loading
+            Swal.fire({
+                title: 'กำลังส่งข้อมูล...',
+                allowOutsideClick: false,
+                didOpen: () => Swal.showLoading()
+            });
+
+            try {
+                const fileBase64 = await fileToBase64(selectedFile);
+                const grade = document.getElementById('grade').value;
+                const semester = document.getElementById('semester').value;
+
+                const formData = new URLSearchParams({
+                    action: 'submit',
+                    timestamp: new Date().toLocaleString('th-TH'),
+                    teacherName: document.getElementById('teacherName').value,
+                    teacherEmail: document.getElementById('teacherEmail').value,
+                    grade: grade,
+                    semester: semester,
+                    activityTitle: document.getElementById('activityTitle').value,
+                    activityDetail: document.getElementById('activityDetail').value,
+                    fileName: selectedFile.name,
+                    fileData: fileBase64,
+                    fileType: 'application/pdf'
+                });
+
+                const response = await fetch(APPS_SCRIPT_URL, {
+                    method: 'POST',
+                    body: formData
+                });
+
+                const result = await response.text();
+
+                if (result.includes('success')) {
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'ส่งรายงานเสร็จสิ้น!',
+                        text: 'ระบบได้บันทึกข้อมูลของคุณแล้ว',
+                        confirmButtonColor: '#667eea'
+                    });
+                    document.getElementById('submitForm').reset();
+                    selectedFile = null;
+                    fileNameDisplay.classList.remove('show');
+                } else {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'เกิดข้อผิดพลาด',
+                        text: 'ไม่สามารถส่งข้อมูลได้ กรุณาลองใหม่อีกครั้ง'
+                    });
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                Swal.fire({
+                    icon: 'error',
+                    title: 'เกิดข้อผิดพลาด',
+                    text: error.message
+                });
+            }
+        }
+
+        // Admin Password Check
+        function checkAdminPassword() {
+            const password = document.getElementById('adminPassword').value;
+            if (password === ADMIN_PASSWORD) {
+                document.getElementById('adminContent').style.display = 'block';
+                document.getElementById('adminPassword').style.display = 'none';
+                document.querySelector('.admin-panel').innerHTML = '<p style="color: #28a745;"><i class="fas fa-check-circle"></i> เข้าสู่ระบบสำเร็จ</p>';
+                loadAdminData();
+            } else {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'รหัสผ่านไม่ถูกต้อง',
+                    text: 'กรุณากรอกรหัสผ่านให้ถูกต้อง'
+                });
+            }
+        }
+
+        // Load Admin Data
+        async function loadAdminData() {
+            try {
+                const response = await fetch(APPS_SCRIPT_URL + '?action=getSubmissions');
+                const data = await response.json();
+                
+                let tableHTML = '';
+                data.forEach((item, index) => {
+                    tableHTML += `
+                        <tr>
+                            <td>${index + 1}</td>
+                            <td>${item.teacherName}</td>
+                            <td>${item.grade}</td>
+                            <td>${item.activityTitle}</td>
+                            <td>${item.timestamp}</td>
+                            <td><span class="badge badge-pending">${item.status || 'รอตรวจสอบ'}</span></td>
+                            <td>
+                                <button class="btn btn-secondary" style="padding: 6px 12px; font-size: 12px;">ตรวจสอบ</button>
+                            </td>
+                        </tr>
+                    `;
+                });
+                
+                document.getElementById('adminTableBody').innerHTML = tableHTML;
+            } catch (error) {
+                console.error('Error loading admin data:', error);
+            }
+        }
+
+        // Load Dashboard Data
+        async function loadDashboardData() {
+            try {
+                const response = await fetch(APPS_SCRIPT_URL + '?action=getSubmissions');
+                const data = await response.json();
+
+                // Calculate statistics
+                let total = data.length;
+                let approved = data.filter(d => d.status === 'ตรวจแล้ว').length;
+                let pending = data.filter(d => !d.status || d.status === 'รอตรวจสอบ').length;
+                let rejected = data.filter(d => d.status === 'ส่งกลับแก้ไข').length;
+
+                // Update cards
+                document.getElementById('totalCount').textContent = total;
+                document.getElementById('approvedCount').textContent = approved;
+                document.getElementById('pendingCount').textContent = pending;
+                document.getElementById('rejectedCount').textContent = rejected;
+
+                // Update table
+                let tableHTML = '';
+                data.forEach((item, index) => {
+                    let badgeClass = 'badge-pending';
+                    let statusText = 'รอตรวจสอบ';
+                    
+                    if (item.status === 'ตรวจแล้ว') {
+                        badgeClass = 'badge-approved';
+                        statusText = 'ตรวจแล้ว';
+                    } else if (item.status === 'ส่งกลับแก้ไข') {
+                        badgeClass = 'badge-rejected';
+                        statusText = 'ส่งกลับแก้ไข';
+                    }
+
+                    tableHTML += `
+                        <tr>
+                            <td>${index + 1}</td>
+                            <td>${item.teacherName}</td>
+                            <td>${item.grade}</td>
+                            <td>${item.semester}</td>
+                            <td>${item.activityTitle}</td>
+                            <td>${item.timestamp}</td>
+                            <td><span class="badge ${badgeClass}">${statusText}</span></td>
+                        </tr>
+                    `;
+                });
+
+                if (tableHTML === '') {
+                    tableHTML = '<tr><td colspan="7" style="text-align: center; color: #999;">ยังไม่มีข้อมูล</td></tr>';
+                }
+
+                document.getElementById('dashboardTableBody').innerHTML = tableHTML;
+            } catch (error) {
+                console.error('Error loading dashboard data:', error);
+                document.getElementById('dashboardTableBody').innerHTML = '<tr><td colspan="7" style="text-align: center; color: #ff6b6b;">ไม่สามารถโหลดข้อมูลได้</td></tr>';
+            }
+        }
+
+        // Navigation Handler
+        function scrollToSection(sectionId) {
+            // Hide all sections
+            document.querySelectorAll('section').forEach(s => s.classList.add('hidden'));
+            
+            // Show target section
+            document.getElementById(sectionId).classList.remove('hidden');
+
+            // Update nav buttons
+            document.querySelectorAll('.nav-btn').forEach(btn => btn.classList.remove('active'));
+            event.target.closest('.nav-btn').classList.add('active');
+
+            // Load data for dashboard
+            if (sectionId === 'dashboard-section') {
+                loadDashboardData();
+            }
+
+            // Scroll to top
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // Initial load
+        document.addEventListener('DOMContentLoaded', () => {
+            console.log('System loaded successfully');
+        });
+    </script>
+
+</body>
+</html>
