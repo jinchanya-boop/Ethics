@@ -27,10 +27,10 @@
 
         /* Header Section */
         header {
-            background: linear-gradient(90deg, #FC466B 0%, #3F5EFB 100%);
+            background: linear-gradient(135deg, #90F7EC 10%, #32CCBC 100%);
             padding: 40px 20px;
             text-align: center;
-            box-shadow: 0 10px 30px rgba(252, 70, 107, 0.3);
+            box-shadow: 0 10px 30px rgba(50, 204, 188, 0.3);
             position: sticky;
             top: 0;
             z-index: 100;
@@ -95,28 +95,31 @@
 
         .nav-btn {
             padding: 10px 20px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
+            background: linear-gradient(135deg, #90F7EC 10%, #32CCBC 100%);
+            color: #2d3436;
             border: none;
             border-radius: 25px;
             cursor: pointer;
             font-family: 'Kanit', sans-serif;
             font-size: 14px;
-            font-weight: 500;
+            font-weight: 600;
             transition: all 0.3s ease;
             display: flex;
             align-items: center;
             gap: 8px;
+            box-shadow: 0 4px 15px rgba(50, 204, 188, 0.2);
         }
 
         .nav-btn:hover {
             transform: translateY(-3px);
-            box-shadow: 0 8px 20px rgba(102, 126, 234, 0.4);
+            box-shadow: 0 8px 25px rgba(50, 204, 188, 0.4);
+            background: linear-gradient(135deg, #70E8DC 10%, #1DAA95 100%);
         }
 
         .nav-btn.active {
-            background: linear-gradient(90deg, #FC466B 0%, #3F5EFB 100%);
-            box-shadow: 0 8px 20px rgba(252, 70, 107, 0.4);
+            background: linear-gradient(135deg, #1DAA95 10%, #0D6E63 100%);
+            color: white;
+            box-shadow: 0 8px 20px rgba(29, 170, 149, 0.5);
         }
 
         /* Main Container */
@@ -143,7 +146,7 @@
 
         .section-title i {
             font-size: 32px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, #90F7EC 10%, #32CCBC 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
@@ -204,8 +207,8 @@
         .form-group select:focus,
         .form-group textarea:focus {
             outline: none;
-            border-color: #667eea;
-            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+            border-color: #32CCBC;
+            box-shadow: 0 0 0 3px rgba(50, 204, 188, 0.1);
         }
 
         .form-row {
@@ -222,23 +225,23 @@
 
         /* File Upload */
         .file-upload-area {
-            border: 2px dashed #667eea;
+            border: 2px dashed #32CCBC;
             border-radius: 15px;
             padding: 30px;
             text-align: center;
             cursor: pointer;
             transition: all 0.3s ease;
-            background: linear-gradient(135deg, rgba(102, 126, 234, 0.05) 0%, rgba(118, 75, 162, 0.05) 100%);
+            background: linear-gradient(135deg, rgba(144, 247, 236, 0.05) 0%, rgba(50, 204, 188, 0.05) 100%);
         }
 
         .file-upload-area:hover {
-            border-color: #764ba2;
-            background: linear-gradient(135deg, rgba(102, 126, 234, 0.1) 0%, rgba(118, 75, 162, 0.1) 100%);
+            border-color: #1FA39A;
+            background: linear-gradient(135deg, rgba(144, 247, 236, 0.1) 0%, rgba(50, 204, 188, 0.1) 100%);
         }
 
         .file-upload-area i {
             font-size: 40px;
-            color: #667eea;
+            color: #32CCBC;
             margin-bottom: 10px;
         }
 
@@ -250,9 +253,9 @@
         .file-name-display {
             margin-top: 10px;
             padding: 10px;
-            background: #f0f3ff;
+            background: #E0F8F7;
             border-radius: 8px;
-            color: #667eea;
+            color: #32CCBC;
             font-size: 13px;
             font-weight: 500;
             display: none;
@@ -278,24 +281,30 @@
         }
 
         .btn-primary {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, #1DAA95 10%, #0D6E63 100%);
             color: white;
             width: 100%;
+            font-weight: 600;
+            box-shadow: 0 4px 15px rgba(29, 170, 149, 0.3);
         }
 
         .btn-primary:hover {
             transform: translateY(-2px);
-            box-shadow: 0 10px 25px rgba(102, 126, 234, 0.4);
+            box-shadow: 0 10px 25px rgba(29, 170, 149, 0.5);
+            background: linear-gradient(135deg, #16968A 10%, #0A4D45 100%);
         }
 
         .btn-secondary {
-            background: linear-gradient(90deg, #FC466B 0%, #3F5EFB 100%);
+            background: linear-gradient(135deg, #1DAA95 10%, #0D6E63 100%);
             color: white;
+            font-weight: 600;
+            box-shadow: 0 4px 15px rgba(29, 170, 149, 0.3);
         }
 
         .btn-secondary:hover {
             transform: translateY(-2px);
-            box-shadow: 0 10px 25px rgba(252, 70, 107, 0.4);
+            box-shadow: 0 10px 25px rgba(29, 170, 149, 0.5);
+            background: linear-gradient(135deg, #16968A 10%, #0A4D45 100%);
         }
 
         /* Dashboard Grid */
@@ -352,8 +361,8 @@
         }
 
         thead {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
+            background: linear-gradient(135deg, #90F7EC 10%, #32CCBC 100%);
+            color: #2d3436;
         }
 
         th {
@@ -430,8 +439,8 @@
 
         /* Admin Panel */
         .admin-panel {
-            background: linear-gradient(135deg, rgba(102, 126, 234, 0.1) 0%, rgba(118, 75, 162, 0.1) 100%);
-            border: 2px solid #667eea;
+            background: linear-gradient(135deg, rgba(144, 247, 236, 0.1) 0%, rgba(50, 204, 188, 0.1) 100%);
+            border: 2px solid #32CCBC;
             border-radius: 15px;
             padding: 20px;
             margin-bottom: 25px;
@@ -440,7 +449,7 @@
         .admin-input {
             max-width: 300px;
             padding: 10px 15px;
-            border: 2px solid #667eea;
+            border: 2px solid #32CCBC;
             border-radius: 10px;
             font-family: 'Kanit', sans-serif;
         }
