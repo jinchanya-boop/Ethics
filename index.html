@@ -3,1153 +3,641 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ระบบรายงานการส่งเสริมคุณธรรมจริยธรรม - โรงเรียนสา</title>
+    <title>ระบบแบบรายงานการส่งเสริมคุณธรรมจริยธรรมในสถานศึกษา</title>
+    
+    <!-- Google Fonts: TH Kanit -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- SweetAlert2 -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+    
+    <!-- Phosphor Icons (Flat Cute Icons) -->
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
 
-        html {
+    <style>
+        :root {
+            --primary-gradient: linear-gradient(90deg, #FC466B 0%, #3F5EFB 100%);
+            --bg-pastel: #F8FAFC;
+        }
+        
+        body {
+            font-family: 'Kanit', sans-serif;
+            background-color: var(--bg-pastel);
+            color: #334155;
             scroll-behavior: smooth;
         }
 
-        body {
-            font-family: 'Kanit', sans-serif;
-            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
-            min-height: 100vh;
-            color: #2d3436;
+        .bg-gradient-custom {
+            background: var(--primary-gradient);
         }
-
-        /* Header Section */
-        header {
-            background: #7F00FF;  /* fallback for old browsers */
-            background: -webkit-linear-gradient(to right, #E100FF, #7F00FF);  /* Chrome 10-25, Safari 5.1-6 */
-            background: linear-gradient(to right, #E100FF, #7F00FF); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
-            padding: 40px 20px;
-            text-align: center;
-            box-shadow: 0 10px 30px rgba(127, 0, 255, 0.3);
-            position: sticky;
-            top: 0;
-            z-index: 100;
-        }
-
-        .header-container {
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        .logo {
-            width: 150px;
-            height: auto;
-            margin-bottom: 15px;
-            animation: slideDown 0.6s ease-out;
-        }
-
-        .system-title {
-            font-size: 28px;
-            font-weight: 600;
-            color: white;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
-            margin-bottom: 10px;
-            animation: slideDown 0.7s ease-out 0.1s both;
-        }
-
-        .system-subtitle {
-            font-size: 14px;
-            color: rgba(255, 255, 255, 0.95);
-            animation: slideDown 0.8s ease-out 0.2s both;
-        }
-
-        @keyframes slideDown {
-            from {
-                opacity: 0;
-                transform: translateY(-20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        /* Navigation */
-        nav {
-            background: white;
-            padding: 15px 20px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-            position: sticky;
-            top: 160px;
-            z-index: 99;
-        }
-
-        .nav-container {
-            max-width: 1200px;
-            margin: 0 auto;
-            display: flex;
-            justify-content: center;
-            gap: 20px;
-            flex-wrap: wrap;
-        }
-
-        .nav-btn {
-            padding: 10px 20px;
-            background: linear-gradient(to right, #E100FF, #7F00FF);
-            color: white;
-            border: none;
-            border-radius: 25px;
-            cursor: pointer;
-            font-family: 'Kanit', sans-serif;
-            font-size: 14px;
-            font-weight: 600;
-            transition: all 0.3s ease;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            box-shadow: 0 4px 15px rgba(127, 0, 255, 0.2);
-        }
-
-        .nav-btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 25px rgba(127, 0, 255, 0.4);
-            background: linear-gradient(to right, #c700d9, #6600cc);
-        }
-
-        .nav-btn.active {
-            background: linear-gradient(to right, #a600cc, #5500aa);
-            color: white;
-            box-shadow: 0 8px 20px rgba(127, 0, 255, 0.5);
-        }
-
-        /* Main Container */
-        .container {
-            max-width: 1200px;
-            margin: 40px auto;
-            padding: 0 20px;
-        }
-
-        /* Section Styles */
-        section {
-            margin-bottom: 40px;
-        }
-
-        .section-title {
-            font-size: 26px;
-            font-weight: 600;
-            color: #2d3436;
-            margin-bottom: 25px;
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-
-        .section-title i {
-            font-size: 32px;
-            background: linear-gradient(to right, #E100FF, #7F00FF);
+        
+        .text-gradient {
+            background: var(--primary-gradient);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
 
-        /* Form Section */
-        .form-card {
+        .glass-nav {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(255,255,255,0.3);
+        }
+
+        .card-minimal {
             background: white;
-            border-radius: 20px;
-            padding: 35px;
-            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
-            animation: fadeIn 0.6s ease-out;
+            border-radius: 24px;
+            box-shadow: 0 10px 40px -10px rgba(0,0,0,0.08);
+            border: 1px solid #F1F5F9;
+            transition: transform 0.2s;
         }
-
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        .form-group {
-            margin-bottom: 25px;
-        }
-
-        .form-group label {
-            display: block;
-            font-size: 15px;
-            font-weight: 500;
-            color: #2d3436;
-            margin-bottom: 10px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .form-group label i {
-            color: #667eea;
-            font-size: 16px;
-        }
-
-        .form-group input,
-        .form-group select,
-        .form-group textarea {
-            width: 100%;
-            padding: 12px 15px;
-            border: 2px solid #e9ecef;
-            border-radius: 12px;
-            font-family: 'Kanit', sans-serif;
-            font-size: 14px;
-            transition: all 0.3s ease;
-        }
-
-        .form-group input:focus,
-        .form-group select:focus,
-        .form-group textarea:focus {
-            outline: none;
-            border-color: #7F00FF;
-            box-shadow: 0 0 0 3px rgba(127, 0, 255, 0.1);
-        }
-
-        .form-row {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 20px;
-        }
-
-        @media (max-width: 768px) {
-            .form-row {
-                grid-template-columns: 1fr;
-            }
-        }
-
-        /* File Upload */
-        .file-upload-area {
-            border: 2px dashed #7F00FF;
-            border-radius: 15px;
-            padding: 30px;
-            text-align: center;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            background: linear-gradient(135deg, rgba(225, 0, 255, 0.05) 0%, rgba(127, 0, 255, 0.05) 100%);
-        }
-
-        .file-upload-area:hover {
-            border-color: #c700d9;
-            background: linear-gradient(135deg, rgba(225, 0, 255, 0.1) 0%, rgba(127, 0, 255, 0.1) 100%);
-        }
-
-        .file-upload-area i {
-            font-size: 40px;
-            color: #7F00FF;
-            margin-bottom: 10px;
-        }
-
-        .file-upload-text {
-            font-size: 14px;
-            color: #666;
-        }
-
-        .file-name-display {
-            margin-top: 10px;
-            padding: 10px;
-            background: #F3E5FF;
-            border-radius: 8px;
-            color: #7F00FF;
-            font-size: 13px;
-            font-weight: 500;
-            display: none;
-        }
-
-        .file-name-display.show {
-            display: block;
-        }
-
-        /* Checkbox Styles */
-        .checkbox-group {
-            display: flex;
-            gap: 20px;
-            flex-wrap: wrap;
-            margin-bottom: 10px;
-        }
-
-        .checkbox-label {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            cursor: pointer;
-            font-weight: 400;
-            padding: 10px 15px;
-            border: 2px solid #e9ecef;
-            border-radius: 10px;
-            transition: all 0.3s ease;
-            background: #f9f9f9;
-        }
-
-        .checkbox-label:hover {
-            border-color: #7F00FF;
-            background: #F3E5FF;
-        }
-
-        .checkbox-label input[type="checkbox"] {
-            width: 18px;
-            height: 18px;
-            cursor: pointer;
-            accent-color: #7F00FF;
-        }
-
-        .checkbox-label input[type="checkbox"]:checked + span {
-            color: #7F00FF;
-            font-weight: 600;
-        }
-
-        .form-help-text {
-            font-size: 13px;
-            color: #7F00FF;
-            font-style: italic;
-            margin-top: 8px;
-            margin-bottom: 15px;
-        }
-
-        /* File Upload Container */
-        #fileUploadContainer {
-            display: grid;
-            gap: 20px;
-            margin-top: 15px;
-        }
-
-        .file-upload-wrapper {
-            border: 1px dashed #ddd;
-            border-radius: 12px;
-            padding: 15px;
-            background: #f9f9f9;
-        }
-
-        .file-upload-wrapper.active {
-            border-color: #3a7bd5;
-            background: #E3F2FD;
-        }
-
-        .file-upload-label {
-            display: block;
-            font-weight: 600;
-            color: #2d3436;
-            margin-bottom: 10px;
-            font-size: 14px;
-        }
-
-        .file-upload-label .semester-badge {
-            display: inline-block;
-            background: linear-gradient(to right, #E100FF, #7F00FF);
-            color: white;
-            padding: 4px 10px;
-            border-radius: 15px;
-            font-size: 12px;
-            margin-left: 8px;
-            font-weight: 600;
-        }
-
-        /* Buttons */
-        .btn {
-            padding: 12px 30px;
-            border: none;
-            border-radius: 12px;
-            font-family: 'Kanit', sans-serif;
-            font-size: 15px;
-            font-weight: 500;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .btn-primary {
-            background: linear-gradient(to right, #a600cc, #5500aa);
-            color: white;
-            width: 100%;
-            font-weight: 600;
-            box-shadow: 0 4px 15px rgba(127, 0, 255, 0.3);
-        }
-
-        .btn-primary:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 25px rgba(127, 0, 255, 0.5);
-            background: linear-gradient(to right, #8b0099, #440088);
-        }
-
-        .btn-secondary {
-            background: linear-gradient(to right, #a600cc, #5500aa);
-            color: white;
-            font-weight: 600;
-            box-shadow: 0 4px 15px rgba(127, 0, 255, 0.3);
-        }
-
-        .btn-secondary:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 25px rgba(127, 0, 255, 0.5);
-            background: linear-gradient(to right, #8b0099, #440088);
-        }
-
-        /* Dashboard Grid */
-        .dashboard-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 25px;
-            margin-bottom: 40px;
-        }
-
-        .stat-card {
-            background: white;
-            border-radius: 15px;
-            padding: 25px;
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
-            text-align: center;
-            transition: all 0.3s ease;
-        }
-
-        .stat-card:hover {
+        
+        .card-minimal:hover {
             transform: translateY(-5px);
-            box-shadow: 0 12px 35px rgba(0, 0, 0, 0.15);
         }
 
-        .stat-icon {
-            font-size: 40px;
-            margin-bottom: 15px;
-        }
-
-        .stat-number {
-            font-size: 32px;
-            font-weight: 700;
-            color: #2d3436;
-            margin-bottom: 8px;
-        }
-
-        .stat-label {
-            font-size: 14px;
-            color: #666;
-            font-weight: 500;
-        }
-
-        /* Table Styles */
-        .table-responsive {
-            overflow-x: auto;
-            border-radius: 15px;
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
-        }
-
-        table {
+        .input-minimal {
+            border: 2px solid #E2E8F0;
+            border-radius: 16px;
+            padding: 12px 16px;
             width: 100%;
-            border-collapse: collapse;
+            transition: all 0.3s;
+            background: #F8FAFC;
+        }
+
+        .input-minimal:focus {
+            outline: none;
+            border-color: #3F5EFB;
             background: white;
+            box-shadow: 0 0 0 4px rgba(63, 94, 251, 0.1);
         }
 
-        thead {
-            background: linear-gradient(to right, #E100FF, #7F00FF);
+        .btn-gradient {
+            background: var(--primary-gradient);
             color: white;
-        }
-
-        th {
-            padding: 16px;
-            text-align: left;
+            border-radius: 16px;
+            padding: 12px 24px;
             font-weight: 600;
-            font-size: 14px;
+            transition: opacity 0.3s, transform 0.2s;
+            border: none;
+            cursor: pointer;
         }
 
-        td {
-            padding: 14px 16px;
-            border-bottom: 1px solid #e9ecef;
+        .btn-gradient:hover {
+            opacity: 0.9;
+            transform: scale(1.02);
         }
 
-        tbody tr:hover {
-            background: #f9f9f9;
-        }
-
-        /* Status Badge */
-        .badge {
-            display: inline-block;
+        .status-badge {
             padding: 6px 12px;
             border-radius: 20px;
-            font-size: 12px;
-            font-weight: 600;
+            font-size: 0.85rem;
+            font-weight: 500;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
         }
 
-        .badge-pending {
-            background: #fff3cd;
-            color: #856404;
-        }
+        .status-pending { background: #FEF3C7; color: #D97706; }
+        .status-revise { background: #FEE2E2; color: #DC2626; }
+        .status-approved { background: #DCFCE7; color: #16A34A; }
 
-        .badge-approved {
-            background: #d4edda;
-            color: #155724;
-        }
-
-        .badge-rejected {
-            background: #f8d7da;
-            color: #721c24;
-        }
-
-        /* Footer */
-        footer {
-            background: linear-gradient(135deg, #2d3436 0%, #1a1a1a 100%);
-            color: white;
-            padding: 30px 20px;
-            text-align: center;
-            margin-top: 60px;
-            font-size: 13px;
-            line-height: 1.8;
-        }
-
-        .footer-content {
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        /* Loading Spinner */
-        .spinner {
-            border: 4px solid #e9ecef;
-            border-top: 4px solid #667eea;
-            border-radius: 50%;
-            width: 40px;
-            height: 40px;
-            animation: spin 1s linear infinite;
-            margin: 20px auto;
-        }
-
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-
-        /* Admin Panel */
-        .admin-panel {
-            background: linear-gradient(135deg, rgba(225, 0, 255, 0.1) 0%, rgba(127, 0, 255, 0.1) 100%);
-            border: 2px solid #7F00FF;
-            border-radius: 15px;
-            padding: 20px;
-            margin-bottom: 25px;
-        }
-
-        .admin-input {
-            max-width: 300px;
-            padding: 10px 15px;
-            border: 2px solid #7F00FF;
-            border-radius: 10px;
-            font-family: 'Kanit', sans-serif;
-        }
-
-        /* Hidden Sections */
-        section.hidden {
-            display: none;
-        }
-
-        /* Responsive */
-        @media (max-width: 768px) {
-            .system-title {
-                font-size: 20px;
-            }
-
-            .system-subtitle {
-                font-size: 12px;
-            }
-
-            .form-card {
-                padding: 20px;
-            }
-
-            .section-title {
-                font-size: 22px;
-            }
-
-            .nav-container {
-                gap: 10px;
-            }
-
-            .nav-btn {
-                padding: 8px 15px;
-                font-size: 13px;
-            }
-
-            .dashboard-grid {
-                grid-template-columns: 1fr;
-            }
-
-            table {
-                font-size: 12px;
-            }
-
-            th, td {
-                padding: 10px;
-            }
-        }
-
-        /* Modal Styles */
-        .modal {
-            display: none;
-            position: fixed;
-            z-index: 1000;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.5);
-            animation: fadeIn 0.3s ease-out;
-        }
-
-        .modal-content {
-            background-color: white;
-            margin: 50px auto;
-            padding: 30px;
-            border-radius: 15px;
-            width: 90%;
-            max-width: 500px;
-            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
-        }
-
-        .close-modal {
-            color: #aaa;
-            float: right;
-            font-size: 28px;
-            font-weight: bold;
-            cursor: pointer;
-            transition: color 0.3s ease;
-        }
-
-        .close-modal:hover {
-            color: #000;
-        }
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: #CBD5E1; border-radius: 10px; }
+        ::-webkit-scrollbar-thumb:hover { background: #94A3B8; }
+        
+        .hidden-section { display: none; }
     </style>
 </head>
-<body>
-
-    <!-- Header -->
-    <header>
-        <div class="header-container">
-            <img src="https://img2.pic.in.th/pic/sa1.png" alt="Logo โรงเรียนสา" class="logo">
-            <h1 class="system-title">🎓 ระบบส่งเสริมคุณธรรมจริยธรรมในสถานศึกษา</h1>
-            <p class="system-subtitle">กิจกรรมอบรมจริยธรรม ประจำสัปดาห์ – โรงเรียนสา</p>
-        </div>
-    </header>
+<body class="antialiased">
 
     <!-- Navigation -->
-    <nav>
-        <div class="nav-container">
-            <button class="nav-btn active" onclick="scrollToSection('submit-section')">
-                <i class="fas fa-paper-plane"></i> ส่งงาน
-            </button>
-            <button class="nav-btn" onclick="scrollToSection('admin-section')">
-                <i class="fas fa-check-circle"></i> อนุมัติ
-            </button>
-            <button class="nav-btn" onclick="scrollToSection('dashboard-section')">
-                <i class="fas fa-chart-bar"></i> แดชบอร์ด
-            </button>
+    <nav class="fixed w-full top-0 z-50 glass-nav">
+        <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex-shrink-0 flex items-center gap-2 cursor-pointer" onclick="showSection('submit')">
+                    <i class="ph-fill ph-student text-2xl text-[#FC466B]"></i>
+                    <span class="font-semibold text-lg hidden sm:block">Saschool</span>
+                </div>
+                <div class="flex space-x-1 sm:space-x-4">
+                    <button onclick="showSection('submit')" class="nav-btn px-3 py-2 rounded-xl text-sm font-medium hover:bg-slate-100 transition flex items-center gap-2">
+                        📝 <span class="hidden sm:inline">ส่งงาน</span>
+                    </button>
+                    <button onclick="showSection('dashboard')" class="nav-btn px-3 py-2 rounded-xl text-sm font-medium hover:bg-slate-100 transition flex items-center gap-2">
+                        📊 <span class="hidden sm:inline">แดชบอร์ด</span>
+                    </button>
+                    <button onclick="loginAdmin()" class="px-3 py-2 rounded-xl text-sm font-medium text-slate-500 hover:text-slate-800 hover:bg-slate-100 transition flex items-center gap-2">
+                        🛡️ <span class="hidden sm:inline">ผู้บริหาร</span>
+                    </button>
+                </div>
+            </div>
         </div>
     </nav>
 
-    <!-- Main Container -->
-    <div class="container">
+    <!-- Main Content -->
+    <main class="pt-24 pb-20 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+        
+        <!-- Header / Logo Area -->
+        <div class="text-center mb-10">
+            <img src="https://img2.pic.in.th/pic/sa1.png" alt="โรงเรียนสา" class="w-[150px] mx-auto mb-4 drop-shadow-md rounded-2xl">
+            <h1 class="text-2xl sm:text-3xl font-bold mb-2 text-gradient">ระบบรายงานการส่งเสริมคุณธรรมจริยธรรม</h1>
+            <p class="text-slate-500 font-medium bg-white inline-block px-4 py-1 rounded-full shadow-sm">
+                (กิจกรรมอบรมจริยธรรม ประจำสัปดาห์) – โรงเรียนสา
+            </p>
+        </div>
 
-        <!-- 1. Submit Section -->
-        <section id="submit-section">
-            <h2 class="section-title">
-                <i class="fas fa-upload"></i> ส่งรายงานกิจกรรมอบรมจริยธรรม
-            </h2>
-            
-            <div class="form-card">
-                <form id="submitForm" onsubmit="handleSubmit(event)">
+        <!-- SECTION: Submit Form -->
+        <section id="section-submit" class="animate-[fadeIn_0.5s_ease-out]">
+            <div class="card-minimal p-6 sm:p-10 max-w-2xl mx-auto relative overflow-hidden">
+                <!-- Decorative element -->
+                <div class="absolute top-0 right-0 w-32 h-32 bg-gradient-custom opacity-10 rounded-bl-full -z-10"></div>
+                
+                <h2 class="text-xl font-bold mb-6 flex items-center gap-2">
+                    <i class="ph-fill ph-paper-plane-tilt text-[#3F5EFB] text-2xl"></i> แบบฟอร์มส่งรายงาน
+                </h2>
+                
+                <form id="submitForm" onsubmit="submitReport(event)">
                     
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label><i class="fas fa-graduation-cap"></i> ระดับชั้น</label>
-                            <select id="grade" required>
-                                <option value="">-- เลือกระดับชั้น --</option>
-                                <option value="ม.1">มัธยมศึกษาปีที่ 1</option>
-                                <option value="ม.2">มัธยมศึกษาปีที่ 2</option>
-                                <option value="ม.3">มัธยมศึกษาปีที่ 3</option>
-                                <option value="ม.4">มัธยมศึกษาปีที่ 4</option>
-                                <option value="ม.5">มัธยมศึกษาปีที่ 5</option>
-                                <option value="ม.6">มัธยมศึกษาปีที่ 6</option>
-                            </select>
-                        </div>
+                    <!-- ระดับชั้น -->
+                    <div class="mb-5">
+                        <label class="block text-sm font-semibold mb-2">🏫 ระดับชั้นที่ส่ง</label>
+                        <select id="grade" required class="input-minimal">
+                            <option value="">-- เลือกระดับชั้น --</option>
+                            <option value="มัธยมศึกษาปีที่ 1">มัธยมศึกษาปีที่ 1</option>
+                            <option value="มัธยมศึกษาปีที่ 2">มัธยมศึกษาปีที่ 2</option>
+                            <option value="มัธยมศึกษาปีที่ 3">มัธยมศึกษาปีที่ 3</option>
+                            <option value="มัธยมศึกษาปีที่ 4">มัธยมศึกษาปีที่ 4</option>
+                            <option value="มัธยมศึกษาปีที่ 5">มัธยมศึกษาปีที่ 5</option>
+                            <option value="มัธยมศึกษาปีที่ 6">มัธยมศึกษาปีที่ 6</option>
+                        </select>
                     </div>
 
-                    <div class="form-group">
-                        <label><i class="fas fa-calendar-alt"></i> ภาคเรียน (สามารถเลือกได้มากกว่า 1 ภาคเรียน)</label>
-                        <div class="checkbox-group">
-                            <label class="checkbox-label">
-                                <input type="checkbox" id="semester1" name="semester" value="ภาคเรียนที่ 1">
+                    <!-- ภาคเรียน -->
+                    <div class="mb-5">
+                        <label class="block text-sm font-semibold mb-2">📚 ภาคเรียนที่ส่ง</label>
+                        <div class="flex gap-4">
+                            <label class="flex items-center gap-2 cursor-pointer bg-slate-50 px-4 py-2 rounded-xl border border-slate-200 hover:bg-slate-100 transition">
+                                <input type="checkbox" id="sem1" value="1" class="w-4 h-4 text-blue-600 rounded" onchange="toggleFileInputs()">
                                 <span>ภาคเรียนที่ 1</span>
                             </label>
-                            <label class="checkbox-label">
-                                <input type="checkbox" id="semester2" name="semester" value="ภาคเรียนที่ 2">
+                            <label class="flex items-center gap-2 cursor-pointer bg-slate-50 px-4 py-2 rounded-xl border border-slate-200 hover:bg-slate-100 transition">
+                                <input type="checkbox" id="sem2" value="2" class="w-4 h-4 text-blue-600 rounded" onchange="toggleFileInputs()">
                                 <span>ภาคเรียนที่ 2</span>
                             </label>
                         </div>
-                        <p class="form-help-text">✓ เลือกได้ 1 หรือ 2 ภาคเรียน</p>
                     </div>
 
-                    <div class="form-group">
-                        <label><i class="fas fa-file-pdf"></i> อัพโหลดไฟล์สรุป (PDF เท่านั้น)</label>
-                        <p class="form-help-text" id="fileUploadHint">💡 เลือกภาคเรียนอย่างน้อย 1 ภาคเรียนแล้วจึงสามารถอัพโหลดไฟล์ได้</p>
-                        
-                        <div id="fileUploadContainer">
-                            <!-- File upload areas will be added here dynamically -->
-                        </div>
+                    <!-- ไฟล์แนบ 1 -->
+                    <div id="fileArea1" class="mb-5 hidden">
+                        <label class="block text-sm font-semibold mb-2">📁 ไฟล์แนบ ภาคเรียนที่ 1 (.pdf เท่านั้น)</label>
+                        <input type="file" id="file1" accept=".pdf" class="input-minimal bg-white file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100">
                     </div>
 
-                    <button type="submit" class="btn btn-primary">
-                        <i class="fas fa-check"></i> ส่งรายงาน
+                    <!-- ไฟล์แนบ 2 -->
+                    <div id="fileArea2" class="mb-6 hidden">
+                        <label class="block text-sm font-semibold mb-2">📁 ไฟล์แนบ ภาคเรียนที่ 2 (.pdf เท่านั้น)</label>
+                        <input type="file" id="file2" accept=".pdf" class="input-minimal bg-white file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100">
+                    </div>
+
+                    <button type="submit" class="btn-gradient w-full flex justify-center items-center gap-2 text-lg">
+                        <i class="ph-bold ph-paper-plane-right"></i> ส่งรายงาน
                     </button>
                 </form>
             </div>
         </section>
 
-        <!-- 2. Admin Section -->
-        <section id="admin-section" class="hidden">
-            <h2 class="section-title">
-                <i class="fas fa-lock"></i> ระบบจัดการและอนุมัติ
-            </h2>
-
-            <div class="form-card">
-                <div class="admin-panel">
-                    <label><i class="fas fa-key"></i> รหัสผ่านผู้บริหาร:</label>
-                    <input type="password" id="adminPassword" class="admin-input" placeholder="กรุณากรอกรหัสผ่าน">
-                    <button class="btn btn-secondary" style="margin-left: 10px;" onclick="checkAdminPassword()">
-                        <i class="fas fa-sign-in-alt"></i> เข้าสู่ระบบ
-                    </button>
+        <!-- SECTION: Dashboard -->
+        <section id="section-dashboard" class="hidden-section animate-[fadeIn_0.5s_ease-out]">
+            
+            <!-- Summary Stats -->
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-8">
+                <div class="card-minimal p-6 flex items-center gap-4">
+                    <div class="w-12 h-12 rounded-full bg-blue-100 flex items-center justify-center text-blue-600 text-2xl">
+                        📁
+                    </div>
+                    <div>
+                        <p class="text-sm text-slate-500 font-medium">ส่งทั้งหมด</p>
+                        <p class="text-2xl font-bold" id="stat-total">0</p>
+                    </div>
                 </div>
-
-                <div id="adminContent" style="display: none;">
-                    <h3 style="margin-bottom: 20px; font-size: 18px; color: #2d3436;">
-                        <i class="fas fa-list"></i> รายงานรอการตรวจสอบ
-                    </h3>
-                    <div class="table-responsive">
-                        <table>
-                            <thead>
-                                <tr>
-                                    <th>ลำดับ</th>
-                                    <th>ชื่อครู</th>
-                                    <th>ระดับชั้น</th>
-                                    <th>หัวข้อกิจกรรม</th>
-                                    <th>วันที่ส่ง</th>
-                                    <th>สถานะ</th>
-                                    <th>จัดการ</th>
-                                </tr>
-                            </thead>
-                            <tbody id="adminTableBody">
-                                <tr>
-                                    <td colspan="7" style="text-align: center; color: #999;">ไม่มีข้อมูล</td>
-                                </tr>
-                            </tbody>
-                        </table>
+                <div class="card-minimal p-6 flex items-center gap-4">
+                    <div class="w-12 h-12 rounded-full bg-yellow-100 flex items-center justify-center text-yellow-600 text-2xl">
+                        ⭐
+                    </div>
+                    <div>
+                        <p class="text-sm text-slate-500 font-medium">รอตรวจ</p>
+                        <p class="text-2xl font-bold" id="stat-pending">0</p>
+                    </div>
+                </div>
+                <div class="card-minimal p-6 flex items-center gap-4">
+                    <div class="w-12 h-12 rounded-full bg-green-100 flex items-center justify-center text-green-600 text-2xl">
+                        ✅
+                    </div>
+                    <div>
+                        <p class="text-sm text-slate-500 font-medium">อนุมัติแล้ว</p>
+                        <p class="text-2xl font-bold" id="stat-approved">0</p>
                     </div>
                 </div>
             </div>
-        </section>
 
-        <!-- 3. Dashboard Section -->
-        <section id="dashboard-section" class="hidden">
-            <h2 class="section-title">
-                <i class="fas fa-chart-pie"></i> แดชบอร์ด สถิติการส่งรายงาน
-            </h2>
-
-            <div class="dashboard-grid">
-                <div class="stat-card">
-                    <div class="stat-icon">📋</div>
-                    <div class="stat-number" id="totalCount">0</div>
-                    <div class="stat-label">จำนวนรายงานทั้งหมด</div>
+            <!-- Data Table -->
+            <div class="card-minimal overflow-hidden">
+                <div class="p-5 border-b border-slate-100 bg-slate-50 flex justify-between items-center">
+                    <h3 class="font-bold flex items-center gap-2"><i class="ph-fill ph-list-dashes text-[#FC466B]"></i> รายการส่งงานล่าสุด</h3>
+                    <button onclick="loadDashboardData()" class="text-sm text-blue-600 hover:text-blue-800 flex items-center gap-1">
+                        <i class="ph-bold ph-arrows-clockwise"></i> รีเฟรช
+                    </button>
                 </div>
-
-                <div class="stat-card">
-                    <div class="stat-icon">✅</div>
-                    <div class="stat-number" id="approvedCount">0</div>
-                    <div class="stat-label">ตรวจแล้ว</div>
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left border-collapse">
+                        <thead>
+                            <tr class="bg-white text-slate-500 text-sm border-b">
+                                <th class="p-4 font-semibold">วันเวลาที่ส่ง</th>
+                                <th class="p-4 font-semibold">ระดับชั้น</th>
+                                <th class="p-4 font-semibold">ภาคเรียน</th>
+                                <th class="p-4 font-semibold">ไฟล์แนบ</th>
+                                <th class="p-4 font-semibold">สถานะ</th>
+                                <th class="p-4 font-semibold">ความคิดเห็น</th>
+                            </tr>
+                        </thead>
+                        <tbody id="dashboard-tbody" class="text-sm divide-y divide-slate-100">
+                            <tr><td colspan="6" class="p-8 text-center text-slate-400">กำลังโหลดข้อมูล...</td></tr>
+                        </tbody>
+                    </table>
                 </div>
-
-                <div class="stat-card">
-                    <div class="stat-icon">⏳</div>
-                    <div class="stat-number" id="pendingCount">0</div>
-                    <div class="stat-label">รอการตรวจสอบ</div>
-                </div>
-
-                <div class="stat-card">
-                    <div class="stat-icon">❌</div>
-                    <div class="stat-number" id="rejectedCount">0</div>
-                    <div class="stat-label">ส่งกลับแก้ไข</div>
-                </div>
-            </div>
-
-            <h3 style="margin: 40px 0 20px; font-size: 18px; color: #2d3436;">
-                <i class="fas fa-table"></i> รายละเอียดรายงานทั้งหมด
-            </h3>
-
-            <div class="table-responsive">
-                <table>
-                    <thead>
-                        <tr>
-                            <th>ลำดับ</th>
-                            <th>ระดับชั้น</th>
-                            <th>ภาคเรียน</th>
-                            <th>ชื่อไฟล์</th>
-                            <th>วันที่ส่ง</th>
-                            <th>สถานะ</th>
-                        </tr>
-                    </thead>
-                    <tbody id="dashboardTableBody">
-                        <tr>
-                            <td colspan="6" style="text-align: center; color: #999;">กำลังโหลดข้อมูล...</td>
-                        </tr>
-                    </tbody>
-                </table>
             </div>
         </section>
 
-    </div>
+        <!-- SECTION: Admin -->
+        <section id="section-admin" class="hidden-section animate-[fadeIn_0.5s_ease-out]">
+            <div class="card-minimal overflow-hidden border-2 border-[#FC466B]/20">
+                <div class="p-5 border-b border-slate-100 bg-gradient-to-r from-red-50 to-blue-50 flex justify-between items-center">
+                    <h3 class="font-bold flex items-center gap-2"><i class="ph-fill ph-shield-check text-[#FC466B]"></i> ระบบผู้บริหาร (ตรวจสอบและอนุมัติ)</h3>
+                    <button onclick="logoutAdmin()" class="text-sm text-red-600 bg-red-100 px-3 py-1 rounded-lg hover:bg-red-200">ออกจากระบบ</button>
+                </div>
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left border-collapse">
+                        <thead>
+                            <tr class="bg-white text-slate-500 text-sm border-b">
+                                <th class="p-4 font-semibold">วันที่</th>
+                                <th class="p-4 font-semibold">ระดับชั้น</th>
+                                <th class="p-4 font-semibold">ไฟล์</th>
+                                <th class="p-4 font-semibold">จัดการสถานะ</th>
+                                <th class="p-4 font-semibold">ข้อเสนอแนะ</th>
+                                <th class="p-4 font-semibold text-center">บันทึก</th>
+                            </tr>
+                        </thead>
+                        <tbody id="admin-tbody" class="text-sm divide-y divide-slate-100">
+                            <!-- Populated by JS -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+    </main>
 
     <!-- Footer -->
-    <footer>
-        <div class="footer-content">
-            <p>📱 พัฒนาโดย งานเทคโนโลยี :: โรงเรียนสา | Saschool</p>
-            <p>© 2025 ระบบส่งเสริมคุณธรรมจริยธรรมในสถานศึกษา (กิจกรรมอบรมจริยธรรม ประจำสัปดาห์)</p>
-        </div>
+    <footer class="bg-white border-t border-slate-200 mt-auto py-6 text-center text-sm text-slate-500">
+        <p>พัฒนาโดย งานเทคโนโลยี :: โรงเรียนสา | Saschool</p>
+        <p class="mt-1">© 2025 ระบบแบบรายงานการส่งเสริมคุณธรรมจริยธรรมในสถานศึกษา (กิจกรรมอบรมจริยธรรม ประจำสัปดาห์)</p>
     </footer>
 
     <script>
-        // Configuration
-        const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbza1kD_Chkzv4NTtmnkYh_DVuoZu1vq57HcKM_xxEk8yyRUkmiIDEuNu6LAJU3SDDpHZQ/exec';
-        const ADMIN_PASSWORD = 'admin999';
-        let selectedFiles = {}; // Object to store files: { semester: file }
+        // CONFIGURATION
+        const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbynOa-HAoZN4HFz6umKfAvQqCMnIQdd7R-52ceM1hLEWd49h93n6EEKAcUfgXQyNYO5/exec';
+        
+        // Global State
+        let currentData = [];
 
-        // Update file upload areas when semester checkboxes change
-        function updateFileUploadAreas() {
-            const semesterChecks = document.querySelectorAll('input[name="semester"]:checked');
-            const container = document.getElementById('fileUploadContainer');
+        // --- UI Navigation ---
+        function showSection(sectionId) {
+            document.getElementById('section-submit').style.display = 'none';
+            document.getElementById('section-dashboard').style.display = 'none';
+            document.getElementById('section-admin').style.display = 'none';
             
-            // Clear previous upload areas
-            container.innerHTML = '';
+            document.getElementById('section-' + sectionId).style.display = 'block';
 
-            if (semesterChecks.length === 0) {
-                container.innerHTML = '<p class="form-help-text">💡 เลือกภาคเรียนอย่างน้อย 1 ภาคเรียนแล้วจึงสามารถอัพโหลดไฟล์ได้</p>';
-                return;
+            if(sectionId === 'dashboard') {
+                loadDashboardData();
             }
-
-            // Create upload area for each selected semester
-            semesterChecks.forEach((checkbox) => {
-                const semester = checkbox.value;
-                const wrapper = document.createElement('div');
-                wrapper.className = 'file-upload-wrapper';
-                wrapper.id = `file-wrapper-${semester}`;
-                wrapper.innerHTML = `
-                    <label class="file-upload-label">
-                        📄 ไฟล์สำหรับ <span class="semester-badge">${semester}</span>
-                    </label>
-                    <div class="file-upload-area" id="fileUploadArea-${semester}">
-                        <i class="fas fa-cloud-upload-alt"></i>
-                        <p class="file-upload-text">คลิกหรือลากไฟล์มาที่นี่<br><small>ไฟล์ .pdf เท่านั้น (ไม่เกิน 10MB)</small></p>
-                    </div>
-                    <input type="file" id="fileInput-${semester}" accept=".pdf" style="display: none;">
-                    <div class="file-name-display" id="fileNameDisplay-${semester}"></div>
-                `;
-                container.appendChild(wrapper);
-
-                // Setup file upload for this semester
-                setupFileUpload(semester);
-            });
         }
 
-        // Setup file upload handlers for a specific semester
-        function setupFileUpload(semester) {
-            const fileUploadArea = document.getElementById(`fileUploadArea-${semester}`);
-            const fileInput = document.getElementById(`fileInput-${semester}`);
-            const fileNameDisplay = document.getElementById(`fileNameDisplay-${semester}`);
+        // --- Form Logic ---
+        function toggleFileInputs() {
+            const sem1 = document.getElementById('sem1').checked;
+            const sem2 = document.getElementById('sem2').checked;
+            
+            const fileArea1 = document.getElementById('fileArea1');
+            const fileArea2 = document.getElementById('fileArea2');
+            const file1 = document.getElementById('file1');
+            const file2 = document.getElementById('file2');
 
-            fileUploadArea.addEventListener('click', () => fileInput.click());
-
-            fileUploadArea.addEventListener('dragover', (e) => {
-                e.preventDefault();
-                fileUploadArea.style.background = 'linear-gradient(135deg, rgba(225, 0, 255, 0.2) 0%, rgba(127, 0, 255, 0.2) 100%)';
-            });
-
-            fileUploadArea.addEventListener('dragleave', () => {
-                fileUploadArea.style.background = 'linear-gradient(135deg, rgba(225, 0, 255, 0.05) 0%, rgba(127, 0, 255, 0.05) 100%)';
-            });
-
-            fileUploadArea.addEventListener('drop', (e) => {
-                e.preventDefault();
-                fileUploadArea.style.background = 'linear-gradient(135deg, rgba(225, 0, 255, 0.05) 0%, rgba(127, 0, 255, 0.05) 100%)';
-                
-                const files = e.dataTransfer.files;
-                if (files.length > 0) {
-                    handleFileSelectForSemester(semester, files[0], fileNameDisplay);
-                }
-            });
-
-            fileInput.addEventListener('change', (e) => {
-                if (e.target.files.length > 0) {
-                    handleFileSelectForSemester(semester, e.target.files[0], fileNameDisplay);
-                }
-            });
-        }
-
-        // Handle file selection for specific semester
-        function handleFileSelectForSemester(semester, file, fileNameDisplay) {
-            if (!file.name.endsWith('.pdf')) {
-                Swal.fire({
-                    icon: 'error',
-                    title: 'ข้อผิดพลาด',
-                    text: 'กรุณาอัพโหลดไฟล์ .pdf เท่านั้น'
-                });
-                return;
+            if (sem1) {
+                fileArea1.style.display = 'block';
+                file1.setAttribute('required', 'true');
+            } else {
+                fileArea1.style.display = 'none';
+                file1.removeAttribute('required');
+                file1.value = '';
             }
 
-            if (file.size > 10 * 1024 * 1024) {
-                Swal.fire({
-                    icon: 'error',
-                    title: 'ไฟล์ใหญ่เกินไป',
-                    text: 'ไฟล์ต้องไม่เกิน 10MB'
-                });
-                return;
+            if (sem2) {
+                fileArea2.style.display = 'block';
+                file2.setAttribute('required', 'true');
+            } else {
+                fileArea2.style.display = 'none';
+                file2.removeAttribute('required');
+                file2.value = '';
             }
-
-            selectedFiles[semester] = file;
-            fileNameDisplay.textContent = `✓ ${file.name} (${(file.size / 1024 / 1024).toFixed(2)} MB)`;
-            fileNameDisplay.classList.add('show');
         }
 
-        // Add event listeners to semester checkboxes
-        document.addEventListener('DOMContentLoaded', () => {
-            const semesterChecks = document.querySelectorAll('input[name="semester"]');
-            semesterChecks.forEach(checkbox => {
-                checkbox.addEventListener('change', updateFileUploadAreas);
-            });
-            // Initial call to update upload areas
-            updateFileUploadAreas();
+        // --- Helper: Convert File to Base64 ---
+        const getBase64 = (file) => new Promise((resolve, reject) => {
+            if (!file) {
+                resolve({ base64: '', name: '', mimeType: '' });
+                return;
+            }
+            const reader = new FileReader();
+            reader.readAsDataURL(file);
+            reader.onload = () => {
+                const result = reader.result;
+                const base64 = result.split(',')[1];
+                resolve({ base64: base64, name: file.name, mimeType: file.type });
+            };
+            reader.onerror = error => reject(error);
         });
 
-        // Convert file to Base64
-        function fileToBase64(file) {
-            return new Promise((resolve, reject) => {
-                const reader = new FileReader();
-                reader.onload = () => resolve(reader.result.split(',')[1]);
-                reader.onerror = reject;
-                reader.readAsDataURL(file);
-            });
-        }
-
-        // Form Submit Handler
-        async function handleSubmit(e) {
+        // --- Submit Form ---
+        async function submitReport(e) {
             e.preventDefault();
 
-            if (!selectedFile) {
-                Swal.fire({
-                    icon: 'warning',
-                    title: 'ยังไม่ได้อัพโหลดไฟล์',
-                    text: 'กรุณาอัพโหลดไฟล์ PDF ให้เรียบร้อย'
-                });
+            const grade = document.getElementById('grade').value;
+            const sem1 = document.getElementById('sem1').checked;
+            const sem2 = document.getElementById('sem2').checked;
+            const file1 = document.getElementById('file1').files[0];
+            const file2 = document.getElementById('file2').files[0];
+
+            if (!sem1 && !sem2) {
+                Swal.fire({ icon: 'warning', title: 'กรุณาเลือก', text: 'ต้องเลือกภาคเรียนอย่างน้อย 1 ภาคเรียน' });
                 return;
             }
 
-            // Get selected semesters
-            const semesterChecks = document.querySelectorAll('input[name="semester"]:checked');
-            if (semesterChecks.length === 0) {
-                Swal.fire({
-                    icon: 'warning',
-                    title: 'ยังไม่ได้เลือกภาคเรียน',
-                    text: 'กรุณาเลือกภาคเรียนอย่างน้อย 1 ภาคเรียน'
-                });
-                return;
-            }
-
-            // Show loading
             Swal.fire({
-                title: 'กำลังส่งข้อมูล...',
+                title: 'กำลังบันทึกข้อมูล...',
+                html: 'กรุณารอสักครู่ ระบบกำลังอัปโหลดไฟล์<br><br><span class="text-sm text-slate-500">อาจใช้เวลา 1-2 นาที ขึ้นอยู่กับขนาดไฟล์</span>',
                 allowOutsideClick: false,
-                didOpen: () => Swal.showLoading()
+                didOpen: () => { Swal.showLoading(); }
             });
 
             try {
-                const fileBase64 = await fileToBase64(selectedFile);
-                const grade = document.getElementById('grade').value;
+                let semesters = [];
+                if(sem1) semesters.push("ภาคเรียนที่ 1");
+                if(sem2) semesters.push("ภาคเรียนที่ 2");
+
+                const f1Data = await getBase64(file1);
+                const f2Data = await getBase64(file2);
+
+                // Use URLSearchParams as requested
+                const params = new URLSearchParams();
+                params.append('action', 'submitData');
+                params.append('grade', grade);
+                params.append('semesters', semesters.join(', '));
                 
-                // Get all selected semesters
-                const selectedSemesters = Array.from(semesterChecks)
-                    .map(checkbox => checkbox.value)
-                    .join(', ');
+                // File 1
+                params.append('f1_name', f1Data.name);
+                params.append('f1_mime', f1Data.mimeType);
+                params.append('f1_base64', f1Data.base64);
+                
+                // File 2
+                params.append('f2_name', f2Data.name);
+                params.append('f2_mime', f2Data.mimeType);
+                params.append('f2_base64', f2Data.base64);
 
-                // Send one submission per semester
-                for (let semesterCheckbox of semesterChecks) {
-                    const semester = semesterCheckbox.value;
-
-                    const formData = new URLSearchParams({
-                        action: 'submit',
-                        timestamp: new Date().toLocaleString('th-TH'),
-                        grade: grade,
-                        semester: semester,
-                        fileName: selectedFile.name,
-                        fileData: fileBase64,
-                        fileType: 'application/pdf'
-                    });
-
-                    const response = await fetch(APPS_SCRIPT_URL, {
-                        method: 'POST',
-                        body: formData
-                    });
-
-                    const result = await response.text();
-
-                    if (!result.includes('success')) {
-                        throw new Error('Failed to submit');
-                    }
-                }
-
-                Swal.fire({
-                    icon: 'success',
-                    title: 'ส่งรายงานเสร็จสิ้น!',
-                    text: `ระบบได้บันทึกข้อมูลของคุณแล้ว (${selectedSemesters})`,
-                    confirmButtonColor: '#7F00FF'
+                const response = await fetch(SCRIPT_URL, {
+                    method: 'POST',
+                    body: params
                 });
-                document.getElementById('submitForm').reset();
-                selectedFiles = {};
-                updateFileUploadAreas();
+
+                const result = await response.json();
+
+                if (result.status === 'success') {
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'บันทึกสำเร็จ!',
+                        text: 'ข้อมูลและไฟล์ของคุณถูกส่งเรียบร้อยแล้ว',
+                        confirmButtonColor: '#3F5EFB'
+                    }).then(() => {
+                        document.getElementById('submitForm').reset();
+                        toggleFileInputs();
+                        showSection('dashboard');
+                    });
+                } else {
+                    throw new Error(result.message || 'Unknown Error');
+                }
             } catch (error) {
-                console.error('Error:', error);
+                console.error("Error:", error);
                 Swal.fire({
                     icon: 'error',
                     title: 'เกิดข้อผิดพลาด',
-                    text: error.message
+                    text: 'ไม่สามารถบันทึกข้อมูลได้ กรุณาลองใหม่อีกครั้ง'
                 });
             }
         }
 
-        // Admin Password Check
-        function checkAdminPassword() {
-            const password = document.getElementById('adminPassword').value;
-            if (password === ADMIN_PASSWORD) {
-                document.getElementById('adminContent').style.display = 'block';
-                document.getElementById('adminPassword').style.display = 'none';
-                document.querySelector('.admin-panel').innerHTML = '<p style="color: #28a745;"><i class="fas fa-check-circle"></i> เข้าสู่ระบบสำเร็จ</p>';
-                loadAdminData();
-            } else {
-                Swal.fire({
-                    icon: 'error',
-                    title: 'รหัสผ่านไม่ถูกต้อง',
-                    text: 'กรุณากรอกรหัสผ่านให้ถูกต้อง'
-                });
-            }
-        }
-
-        // Load Admin Data
-        async function loadAdminData() {
-            try {
-                const response = await fetch(APPS_SCRIPT_URL + '?action=getSubmissions');
-                const data = await response.json();
-                
-                let tableHTML = '';
-                data.forEach((item, index) => {
-                    tableHTML += `
-                        <tr>
-                            <td>${index + 1}</td>
-                            <td>${item.teacherName}</td>
-                            <td>${item.grade}</td>
-                            <td>${item.activityTitle}</td>
-                            <td>${item.timestamp}</td>
-                            <td><span class="badge badge-pending">${item.status || 'รอตรวจสอบ'}</span></td>
-                            <td>
-                                <button class="btn btn-secondary" style="padding: 6px 12px; font-size: 12px;">ตรวจสอบ</button>
-                            </td>
-                        </tr>
-                    `;
-                });
-                
-                document.getElementById('adminTableBody').innerHTML = tableHTML;
-            } catch (error) {
-                console.error('Error loading admin data:', error);
-            }
-        }
-
-        // Load Dashboard Data
+        // --- Fetch & Render Dashboard ---
         async function loadDashboardData() {
-            try {
-                const response = await fetch(APPS_SCRIPT_URL + '?action=getSubmissions');
-                const data = await response.json();
-
-                // Calculate statistics
-                let total = data.length;
-                let approved = data.filter(d => d.status === 'ตรวจแล้ว').length;
-                let pending = data.filter(d => !d.status || d.status === 'รอตรวจสอบ').length;
-                let rejected = data.filter(d => d.status === 'ส่งกลับแก้ไข').length;
-
-                // Update cards
-                document.getElementById('totalCount').textContent = total;
-                document.getElementById('approvedCount').textContent = approved;
-                document.getElementById('pendingCount').textContent = pending;
-                document.getElementById('rejectedCount').textContent = rejected;
-
-                // Update table
-                let tableHTML = '';
-                data.forEach((item, index) => {
-                    let badgeClass = 'badge-pending';
-                    let statusText = 'รอตรวจสอบ';
-                    
-                    if (item.status === 'ตรวจแล้ว') {
-                        badgeClass = 'badge-approved';
-                        statusText = 'ตรวจแล้ว';
-                    } else if (item.status === 'ส่งกลับแก้ไข') {
-                        badgeClass = 'badge-rejected';
-                        statusText = 'ส่งกลับแก้ไข';
-                    }
-
-                    tableHTML += `
-                        <tr>
-                            <td>${index + 1}</td>
-                            <td>${item.grade}</td>
-                            <td>${item.semester}</td>
-                            <td>${item.fileName}</td>
-                            <td>${item.timestamp}</td>
-                            <td><span class="badge ${badgeClass}">${statusText}</span></td>
-                        </tr>
-                    `;
-                });
-
-                if (tableHTML === '') {
-                    tableHTML = '<tr><td colspan="6" style="text-align: center; color: #999;">ยังไม่มีข้อมูล</td></tr>';
-                }
-
-                document.getElementById('dashboardTableBody').innerHTML = tableHTML;
-            } catch (error) {
-                console.error('Error loading dashboard data:', error);
-                document.getElementById('dashboardTableBody').innerHTML = '<tr><td colspan="6" style="text-align: center; color: #ff6b6b;">ไม่สามารถโหลดข้อมูลได้</td></tr>';
-            }
-        }
-
-        // Navigation Handler
-        function scrollToSection(sectionId) {
-            // Hide all sections
-            document.querySelectorAll('section').forEach(s => s.classList.add('hidden'));
+            const tbody = document.getElementById('dashboard-tbody');
+            tbody.innerHTML = '<tr><td colspan="6" class="p-8 text-center text-slate-400">กำลังโหลดข้อมูล <i class="ph ph-spinner animate-spin"></i></td></tr>';
             
-            // Show target section
-            document.getElementById(sectionId).classList.remove('hidden');
-
-            // Update nav buttons
-            document.querySelectorAll('.nav-btn').forEach(btn => btn.classList.remove('active'));
-            event.target.closest('.nav-btn').classList.add('active');
-
-            // Load data for dashboard
-            if (sectionId === 'dashboard-section') {
-                loadDashboardData();
+            try {
+                const response = await fetch(SCRIPT_URL + '?action=getData');
+                const result = await response.json();
+                
+                if(result.status === 'success') {
+                    currentData = result.data;
+                    renderDashboard(currentData);
+                    if(document.getElementById('section-admin').style.display === 'block') {
+                        renderAdmin(currentData);
+                    }
+                } else {
+                    tbody.innerHTML = '<tr><td colspan="6" class="p-8 text-center text-red-500">ไม่สามารถโหลดข้อมูลได้</td></tr>';
+                }
+            } catch (error) {
+                tbody.innerHTML = '<tr><td colspan="6" class="p-8 text-center text-red-500">เกิดข้อผิดพลาดในการเชื่อมต่อ</td></tr>';
             }
-
-            // Scroll to top
-            window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
-        // Initial load
-        document.addEventListener('DOMContentLoaded', () => {
-            console.log('System loaded successfully');
-        });
-    </script>
+        function getStatusBadge(status) {
+            if(status === 'ตรวจแล้ว ✅') return '<span class="status-badge status-approved">✅ ตรวจแล้ว</span>';
+            if(status === 'รอแก้ไข ❗') return '<span class="status-badge status-revise">❗ รอแก้ไข</span>';
+            return '<span class="status-badge status-pending">⭐ รอตรวจ</span>';
+        }
 
+        function renderDashboard(data) {
+            const tbody = document.getElementById('dashboard-tbody');
+            tbody.innerHTML = '';
+            
+            let total = 0, pending = 0, approved = 0;
+
+            // Start from end to show latest first (assuming data order is chronological)
+            for(let i = data.length - 1; i >= 0; i--) {
+                const row = data[i];
+                if(!row.timestamp) continue; // skip empty rows
+
+                total++;
+                const status = row.status || 'รอตรวจ ⭐';
+                if(status.includes('ตรวจแล้ว')) approved++;
+                if(status.includes('รอตรวจ')) pending++;
+
+                let filesHtml = '';
+                if(row.file1) filesHtml += `<a href="${row.file1}" target="_blank" class="text-blue-500 hover:underline text-xs flex items-center gap-1"><i class="ph-fill ph-file-pdf text-red-500"></i> ไฟล์เทอม 1</a>`;
+                if(row.file2) filesHtml += `<a href="${row.file2}" target="_blank" class="text-blue-500 hover:underline text-xs flex items-center gap-1 mt-1"><i class="ph-fill ph-file-pdf text-red-500"></i> ไฟล์เทอม 2</a>`;
+
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td class="p-4 whitespace-nowrap">${new Date(row.timestamp).toLocaleString('th-TH')}</td>
+                    <td class="p-4">${row.grade}</td>
+                    <td class="p-4">${row.semesters}</td>
+                    <td class="p-4">${filesHtml || '-'}</td>
+                    <td class="p-4">${getStatusBadge(status)}</td>
+                    <td class="p-4 text-slate-500 italic max-w-xs truncate" title="${row.comment || ''}">${row.comment || '-'}</td>
+                `;
+                tbody.appendChild(tr);
+            }
+
+            if(total === 0) {
+                tbody.innerHTML = '<tr><td colspan="6" class="p-8 text-center text-slate-400">ยังไม่มีข้อมูล</td></tr>';
+            }
+
+            document.getElementById('stat-total').innerText = total;
+            document.getElementById('stat-pending').innerText = pending;
+            document.getElementById('stat-approved').innerText = approved;
+        }
+
+        // --- Admin Logic ---
+        function loginAdmin() {
+            Swal.fire({
+                title: 'เข้าสู่ระบบผู้บริหาร',
+                input: 'password',
+                inputPlaceholder: 'ใส่รหัสผ่าน...',
+                showCancelButton: true,
+                confirmButtonText: 'เข้าสู่ระบบ',
+                cancelButtonText: 'ยกเลิก',
+                confirmButtonColor: '#3F5EFB'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    if (result.value === 'admin999') {
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'เข้าสู่ระบบสำเร็จ',
+                            timer: 1500,
+                            showConfirmButton: false
+                        }).then(() => {
+                            showSection('admin');
+                            if(currentData.length === 0) loadDashboardData();
+                            else renderAdmin(currentData);
+                        });
+                    } else {
+                        Swal.fire({ icon: 'error', title: 'รหัสผ่านไม่ถูกต้อง' });
+                    }
+                }
+            });
+        }
+
+        function logoutAdmin() {
+            showSection('dashboard');
+            Swal.fire({
+                toast: true, position: 'top-end', icon: 'info', title: 'ออกจากระบบแล้ว', showConfirmButton: false, timer: 2000
+            });
+        }
+
+        function renderAdmin(data) {
+            const tbody = document.getElementById('admin-tbody');
+            tbody.innerHTML = '';
+            
+            for(let i = data.length - 1; i >= 0; i--) {
+                const row = data[i];
+                if(!row.timestamp) continue; 
+                
+                // row.row is the actual row number in Google Sheet
+                const sheetRow = row.row; 
+
+                let filesHtml = '';
+                if(row.file1) filesHtml += `<a href="${row.file1}" target="_blank" class="text-blue-600 hover:underline">📄 ไฟล์ 1</a><br>`;
+                if(row.file2) filesHtml += `<a href="${row.file2}" target="_blank" class="text-blue-600 hover:underline">📄 ไฟล์ 2</a>`;
+
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td class="p-4 text-xs">${new Date(row.timestamp).toLocaleString('th-TH')}</td>
+                    <td class="p-4 font-medium">${row.grade}</td>
+                    <td class="p-4 text-xs">${filesHtml || '-'}</td>
+                    <td class="p-4">
+                        <select id="status_${sheetRow}" class="input-minimal p-2 text-sm">
+                            <option value="รอตรวจ ⭐" ${row.status === 'รอตรวจ ⭐' || !row.status ? 'selected' : ''}>รอตรวจ ⭐</option>
+                            <option value="รอแก้ไข ❗" ${row.status === 'รอแก้ไข ❗' ? 'selected' : ''}>รอแก้ไข ❗</option>
+                            <option value="ตรวจแล้ว ✅" ${row.status === 'ตรวจแล้ว ✅' ? 'selected' : ''}>ตรวจแล้ว ✅</option>
+                        </select>
+                    </td>
+                    <td class="p-4">
+                        <input type="text" id="comment_${sheetRow}" value="${row.comment || ''}" class="input-minimal p-2 text-sm" placeholder="พิมพ์ข้อเสนอแนะ...">
+                    </td>
+                    <td class="p-4 text-center">
+                        <button onclick="updateStatus(${sheetRow})" class="bg-blue-600 hover:bg-blue-700 text-white px-3 py-1.5 rounded-lg text-sm transition">
+                            บันทึก
+                        </button>
+                    </td>
+                `;
+                tbody.appendChild(tr);
+            }
+        }
+
+        async function updateStatus(rowNum) {
+            const status = document.getElementById(`status_${rowNum}`).value;
+            const comment = document.getElementById(`comment_${rowNum}`).value;
+
+            Swal.fire({
+                title: 'กำลังบันทึก...',
+                allowOutsideClick: false,
+                didOpen: () => { Swal.showLoading(); }
+            });
+
+            const params = new URLSearchParams();
+            params.append('action', 'updateAdmin');
+            params.append('row', rowNum);
+            params.append('status', status);
+            params.append('comment', comment);
+
+            try {
+                const response = await fetch(SCRIPT_URL, {
+                    method: 'POST',
+                    body: params
+                });
+                const result = await response.json();
+
+                if(result.status === 'success') {
+                    Swal.fire({ icon: 'success', title: 'อัปเดตสำเร็จ', timer: 1500, showConfirmButton: false });
+                    loadDashboardData(); // reload data
+                } else {
+                    throw new Error();
+                }
+            } catch(e) {
+                Swal.fire({ icon: 'error', title: 'เกิดข้อผิดพลาด' });
+            }
+        }
+
+        // Init
+        document.addEventListener('DOMContentLoaded', () => {
+            // Hide specific file inputs on load
+            toggleFileInputs();
+        });
+
+    </script>
 </body>
 </html>
