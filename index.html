@@ -265,6 +265,52 @@
             display: block;
         }
 
+        /* Checkbox Styles */
+        .checkbox-group {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+            margin-bottom: 10px;
+        }
+
+        .checkbox-label {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+            font-weight: 400;
+            padding: 10px 15px;
+            border: 2px solid #e9ecef;
+            border-radius: 10px;
+            transition: all 0.3s ease;
+            background: #f9f9f9;
+        }
+
+        .checkbox-label:hover {
+            border-color: #32CCBC;
+            background: #E0F8F7;
+        }
+
+        .checkbox-label input[type="checkbox"] {
+            width: 18px;
+            height: 18px;
+            cursor: pointer;
+            accent-color: #32CCBC;
+        }
+
+        .checkbox-label input[type="checkbox"]:checked + span {
+            color: #32CCBC;
+            font-weight: 600;
+        }
+
+        .form-help-text {
+            font-size: 13px;
+            color: #32CCBC;
+            font-style: italic;
+            margin-top: 8px;
+            margin-bottom: 0;
+        }
+
         /* Buttons */
         .btn {
             padding: 12px 30px;
@@ -576,17 +622,6 @@
                     
                     <div class="form-row">
                         <div class="form-group">
-                            <label><i class="fas fa-user"></i> ชื่อครู/อาจารย์</label>
-                            <input type="text" id="teacherName" required placeholder="กรุณากรอกชื่อ">
-                        </div>
-                        <div class="form-group">
-                            <label><i class="fas fa-envelope"></i> อีเมล</label>
-                            <input type="email" id="teacherEmail" required placeholder="example@school.com">
-                        </div>
-                    </div>
-
-                    <div class="form-row">
-                        <div class="form-group">
                             <label><i class="fas fa-graduation-cap"></i> ระดับชั้น</label>
                             <select id="grade" required>
                                 <option value="">-- เลือกระดับชั้น --</option>
@@ -598,24 +633,21 @@
                                 <option value="ม.6">มัธยมศึกษาปีที่ 6</option>
                             </select>
                         </div>
-                        <div class="form-group">
-                            <label><i class="fas fa-calendar-alt"></i> ภาคเรียน</label>
-                            <select id="semester" required>
-                                <option value="">-- เลือกภาคเรียน --</option>
-                                <option value="ภาคเรียนที่ 1">ภาคเรียนที่ 1</option>
-                                <option value="ภาคเรียนที่ 2">ภาคเรียนที่ 2</option>
-                            </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label><i class="fas fa-calendar-alt"></i> ภาคเรียน (สามารถเลือกได้มากกว่า 1 ภาคเรียน)</label>
+                        <div class="checkbox-group">
+                            <label class="checkbox-label">
+                                <input type="checkbox" id="semester1" name="semester" value="ภาคเรียนที่ 1">
+                                <span>ภาคเรียนที่ 1</span>
+                            </label>
+                            <label class="checkbox-label">
+                                <input type="checkbox" id="semester2" name="semester" value="ภาคเรียนที่ 2">
+                                <span>ภาคเรียนที่ 2</span>
+                            </label>
                         </div>
-                    </div>
-
-                    <div class="form-group">
-                        <label><i class="fas fa-book"></i> หัวข้อกิจกรรม</label>
-                        <input type="text" id="activityTitle" required placeholder="กรุณากรอกหัวข้อกิจกรรม">
-                    </div>
-
-                    <div class="form-group">
-                        <label><i class="fas fa-pen-fancy"></i> รายละเอียดกิจกรรม</label>
-                        <textarea id="activityDetail" rows="5" required placeholder="กรุณากรอกรายละเอียดกิจกรรม..."></textarea>
+                        <p class="form-help-text">✓ เลือกได้ 1 หรือ 2 ภาคเรียน</p>
                     </div>
 
                     <div class="form-group">
@@ -719,17 +751,16 @@
                     <thead>
                         <tr>
                             <th>ลำดับ</th>
-                            <th>ชื่อครู</th>
                             <th>ระดับชั้น</th>
                             <th>ภาคเรียน</th>
-                            <th>หัวข้อกิจกรรม</th>
+                            <th>ชื่อไฟล์</th>
                             <th>วันที่ส่ง</th>
                             <th>สถานะ</th>
                         </tr>
                     </thead>
                     <tbody id="dashboardTableBody">
                         <tr>
-                            <td colspan="7" style="text-align: center; color: #999;">กำลังโหลดข้อมูล...</td>
+                            <td colspan="6" style="text-align: center; color: #999;">กำลังโหลดข้อมูล...</td>
                         </tr>
                     </tbody>
                 </table>
@@ -831,6 +862,17 @@
                 return;
             }
 
+            // Get selected semesters
+            const semesterChecks = document.querySelectorAll('input[name="semester"]:checked');
+            if (semesterChecks.length === 0) {
+                Swal.fire({
+                    icon: 'warning',
+                    title: 'ยังไม่ได้เลือกภาคเรียน',
+                    text: 'กรุณาเลือกภาคเรียนอย่างน้อย 1 ภาคเรียน'
+                });
+                return;
+            }
+
             // Show loading
             Swal.fire({
                 title: 'กำลังส่งข้อมูล...',
@@ -841,46 +883,47 @@
             try {
                 const fileBase64 = await fileToBase64(selectedFile);
                 const grade = document.getElementById('grade').value;
-                const semester = document.getElementById('semester').value;
+                
+                // Get all selected semesters
+                const selectedSemesters = Array.from(semesterChecks)
+                    .map(checkbox => checkbox.value)
+                    .join(', ');
 
-                const formData = new URLSearchParams({
-                    action: 'submit',
-                    timestamp: new Date().toLocaleString('th-TH'),
-                    teacherName: document.getElementById('teacherName').value,
-                    teacherEmail: document.getElementById('teacherEmail').value,
-                    grade: grade,
-                    semester: semester,
-                    activityTitle: document.getElementById('activityTitle').value,
-                    activityDetail: document.getElementById('activityDetail').value,
-                    fileName: selectedFile.name,
-                    fileData: fileBase64,
-                    fileType: 'application/pdf'
-                });
+                // Send one submission per semester
+                for (let semesterCheckbox of semesterChecks) {
+                    const semester = semesterCheckbox.value;
 
-                const response = await fetch(APPS_SCRIPT_URL, {
-                    method: 'POST',
-                    body: formData
-                });
-
-                const result = await response.text();
-
-                if (result.includes('success')) {
-                    Swal.fire({
-                        icon: 'success',
-                        title: 'ส่งรายงานเสร็จสิ้น!',
-                        text: 'ระบบได้บันทึกข้อมูลของคุณแล้ว',
-                        confirmButtonColor: '#667eea'
+                    const formData = new URLSearchParams({
+                        action: 'submit',
+                        timestamp: new Date().toLocaleString('th-TH'),
+                        grade: grade,
+                        semester: semester,
+                        fileName: selectedFile.name,
+                        fileData: fileBase64,
+                        fileType: 'application/pdf'
                     });
-                    document.getElementById('submitForm').reset();
-                    selectedFile = null;
-                    fileNameDisplay.classList.remove('show');
-                } else {
-                    Swal.fire({
-                        icon: 'error',
-                        title: 'เกิดข้อผิดพลาด',
-                        text: 'ไม่สามารถส่งข้อมูลได้ กรุณาลองใหม่อีกครั้ง'
+
+                    const response = await fetch(APPS_SCRIPT_URL, {
+                        method: 'POST',
+                        body: formData
                     });
+
+                    const result = await response.text();
+
+                    if (!result.includes('success')) {
+                        throw new Error('Failed to submit');
+                    }
                 }
+
+                Swal.fire({
+                    icon: 'success',
+                    title: 'ส่งรายงานเสร็จสิ้น!',
+                    text: `ระบบได้บันทึกข้อมูลของคุณแล้ว (${selectedSemesters})`,
+                    confirmButtonColor: '#32CCBC'
+                });
+                document.getElementById('submitForm').reset();
+                selectedFile = null;
+                fileNameDisplay.classList.remove('show');
             } catch (error) {
                 console.error('Error:', error);
                 Swal.fire({
@@ -972,10 +1015,9 @@
                     tableHTML += `
                         <tr>
                             <td>${index + 1}</td>
-                            <td>${item.teacherName}</td>
                             <td>${item.grade}</td>
                             <td>${item.semester}</td>
-                            <td>${item.activityTitle}</td>
+                            <td>${item.fileName}</td>
                             <td>${item.timestamp}</td>
                             <td><span class="badge ${badgeClass}">${statusText}</span></td>
                         </tr>
@@ -983,13 +1025,13 @@
                 });
 
                 if (tableHTML === '') {
-                    tableHTML = '<tr><td colspan="7" style="text-align: center; color: #999;">ยังไม่มีข้อมูล</td></tr>';
+                    tableHTML = '<tr><td colspan="6" style="text-align: center; color: #999;">ยังไม่มีข้อมูล</td></tr>';
                 }
 
                 document.getElementById('dashboardTableBody').innerHTML = tableHTML;
             } catch (error) {
                 console.error('Error loading dashboard data:', error);
-                document.getElementById('dashboardTableBody').innerHTML = '<tr><td colspan="7" style="text-align: center; color: #ff6b6b;">ไม่สามารถโหลดข้อมูลได้</td></tr>';
+                document.getElementById('dashboardTableBody').innerHTML = '<tr><td colspan="6" style="text-align: center; color: #ff6b6b;">ไม่สามารถโหลดข้อมูลได้</td></tr>';
             }
         }
 
